@@ -15,14 +15,14 @@ class Play extends Phaser.Scene {
         this.load.image('door', './assets/door.png');
   
         // load audio
-        this.load.audio('fstep1', './assets/fstep1.wav');
+        this.load.audio('steps', './assets/fsteps_clean.wav');
     }
 
     create () {
         // place tile sprite
         this.background = this.add.tileSprite(0, 0, 502, 376, 'room').setOrigin(0, 0);
 
-        //place room objects
+        // place room objects
         this.painting = this.physics.add.sprite(game.config.width / 3, backWall - 21, 'painting');
         this.door = this.physics.add.sprite(game.config.width / 1.5, backWall, 'door');
         this.clock = this.physics.add.sprite(game.config.width - 20, backWall, 'clock');
@@ -30,6 +30,7 @@ class Play extends Phaser.Scene {
         this.player = new Player(this, centerX, centerY, 'player').setOrigin(0.5, 0);
         this.desk = this.physics.add.sprite(40, centerY, 'desk');
 
+        this.steps = this.sound.add('steps');
         
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -41,5 +42,14 @@ class Play extends Phaser.Scene {
 
     update() {
         this.player.update();
+
+        if (keyLEFT.isDown || keyRIGHT.isDown || keyUP.isDown || keyDOWN.isDown) {
+            if (!this.steps.isPlaying)
+                this.steps.play({volume: 0.3, rate: 2.5});
+        }
+        else {
+            this.steps.stop();
+        }
+
     }
 }
