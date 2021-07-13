@@ -30,7 +30,11 @@ class Play extends Phaser.Scene {
         this.player = new Player(this, centerX, centerY, 'player').setOrigin(0.5, 0);
         this.desk = this.physics.add.sprite(40, centerY, 'desk');
 
+        // add audio
         this.steps = this.sound.add('steps');
+
+        // temporary text
+        this.add.text(game.config.width / 2, game.config.height - 20, 'Press M to go to menu').setOrigin(0.5);
         
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -38,6 +42,7 @@ class Play extends Phaser.Scene {
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);    // temporary
     }
 
     update() {
@@ -51,5 +56,7 @@ class Play extends Phaser.Scene {
             this.steps.stop();
         }
 
+        if (Phaser.Input.Keyboard.JustDown(keyM)) 
+            this.scene.start('menuScene');
     }
 }
