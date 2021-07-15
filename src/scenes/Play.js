@@ -86,8 +86,8 @@ class Play extends Phaser.Scene {
                 this.playStep = this.sound.add(
                     this.steps[Math.floor(Math.random() * 5)]
                 );
-                this.playStep.play({ detune: Math.floor(Math.random() * 300), rate: 2.5, volume: 0.7});
-                this.time.delayedCall(350, () => {
+                this.playStep.play({ volume: 0.4,rate: 1.2, detune: Math.floor(Math.random() * 300) });
+                this.time.delayedCall(400, () => {
                     this.stepping = false
                 }, null, this);
             }
