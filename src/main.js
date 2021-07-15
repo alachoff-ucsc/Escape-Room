@@ -8,13 +8,13 @@ let config = {
         debug: true
       }
     },
-    scene: [Menu, Play]
+    scene: [Menu, Play, Painting]
   }
   
 let game = new Phaser.Game(config);
 
 // reserve keyboard vars
-let keySPACE, keyW, keyA, keyS, keyD, keyE;
+let keySPACE, keyW, keyA, keyS, keyD, keyE, keyC;
 
 // global vars
 let centerX = game.config.width / 2;

@@ -30,15 +30,19 @@ class Play extends Phaser.Scene {
 
         // place room objects
         this.painting = this.physics.add.sprite(game.config.width / 3, backWall - 21, 'painting');
+        this.painting.body.onOverlap = true;
 
         this.door = this.physics.add.sprite(game.config.width / 1.5, backWall, 'door');
+        this.door.body.onOverlap = true;
 
         this.clock = this.physics.add.sprite(game.config.width - 20, backWall, 'clock');
         this.clock.body.setImmovable(true);     // for solid collisions
         this.clock.setSize(27, 29);
         this.clock.setOffset(0, 10);       // shift hitbox up
+        this.clock.body.onOverlap = true;
 
         this.switch = this.physics.add.sprite(game.config.width / 1.3, backWall - 3, 'switch');
+        this.switch.body.onOverlap = true;
 
         this.player = this.physics.add.sprite(centerX, centerY, 'player');
         this.player.setCollideWorldBounds(true);
@@ -62,10 +66,10 @@ class Play extends Phaser.Scene {
 
         // variables
         this.movespeed = 120;
+        this.lightsOn = true;
     }
 
     update() {
-        
         // play footsteps sound
         if (keyW.isDown || keyA.isDown || keyS.isDown || keyD.isDown) {
             // pick random from this.steps and play with a delay
@@ -100,6 +104,8 @@ class Play extends Phaser.Scene {
             this.player.body.setVelocityX(0);
         }
 
+        // create physics world events
+        // note: you MUST use a .collide/.overlap check in update() AND set body.onCollide/body.onOverlap/.onWorldBounds to true for these to work
         
         // check collisions and overlaps; collide makes the object solid, overlap allows for overlapping of hitboxes
         this.physics.collide(this.player, this.clock);
@@ -107,5 +113,16 @@ class Play extends Phaser.Scene {
         this.physics.overlap(this.player, this.door);
         this.physics.overlap(this.player, this.painting);
         this.physics.overlap(this.player, this.switch);
+
+        // check for interactions
+        this.physics.world.on('overlap', (obj1, obj2, body1, body2)=>{
+            if (`${obj2.texture.key}` == 'switch' && Phaser.Input.Keyboard.JustDown(keyE)) {
+                this.lightsOn = !this.lightsOn;
+            }
+            if (`${obj2.texture.key}` == 'painting' && Phaser.Input.Keyboard.JustDown(keyE)) {
+                this.scene.pause();
+                this.scene.launch('paintingScene');
+            }
+        });
     }
 }
