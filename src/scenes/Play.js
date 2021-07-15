@@ -19,15 +19,18 @@ class Play extends Phaser.Scene {
     }
 
     create () {
-        // place tile sprite
+        // place tile sprite and set world boundaries
         this.background = this.add.tileSprite(0, 0, 502, 376, 'room').setOrigin(0, 0);
+        this.physics.world.setBounds(0, game.config.height / 4, game.config.width, game.config.height - game.config.height / 4);
+        this.physics.world.setBoundsCollision();
 
         // place room objects
         this.painting = this.physics.add.sprite(game.config.width / 3, backWall - 21, 'painting');
         this.door = this.physics.add.sprite(game.config.width / 1.5, backWall, 'door');
         this.clock = this.physics.add.sprite(game.config.width - 20, backWall, 'clock');
         this.switch = this.physics.add.sprite(game.config.width / 1.4, backWall - 3, 'switch');
-        this.player = new Player(this, centerX, centerY, 'player').setOrigin(0.5, 0);
+        this.player = this.physics.add.sprite(centerX, centerY, 'player');
+        this.player.setCollideWorldBounds(true);
         this.desk = this.physics.add.sprite(40, centerY, 'desk');
 
         // add audio
@@ -43,10 +46,12 @@ class Play extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);    // temporary
+
+        // variables
+        this.movespeed = 120;
     }
 
     update() {
-        this.player.update();
 
         if (keyLEFT.isDown || keyRIGHT.isDown || keyUP.isDown || keyDOWN.isDown) {
             if (!this.steps.isPlaying)
@@ -58,5 +63,24 @@ class Play extends Phaser.Scene {
 
         if (Phaser.Input.Keyboard.JustDown(keyM)) 
             this.scene.start('menuScene');
+
+        if (keyUP.isDown) {
+            this.player.body.setVelocityY(-this.movespeed);
+        }
+        else if (keyDOWN.isDown) {
+            this.player.body.setVelocityY(this.movespeed);
+        }
+        else {
+            this.player.body.setVelocityY(0);
+        }
+        if (keyLEFT.isDown) {
+            this.player.body.setVelocityX(-this.movespeed);
+        }
+        else if (keyRIGHT.isDown) {
+            this.player.body.setVelocityX(this.movespeed);
+        }
+        else {
+            this.player.body.setVelocityX(0);
+        }
     }
 }
