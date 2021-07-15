@@ -6,11 +6,12 @@ class Play extends Phaser.Scene {
     preload() {
         // load images and tile sprites
   
-        this.load.image('room', './assets/room.png');
-        this.load.image('player', './assets/player.png');
+        this.load.image('room', './assets/room1.png');
+        this.load.image('player', './assets/player1.png');
         this.load.image('desk', './assets/desk.png');
         this.load.image('clock', './assets/clock.png');
         this.load.image('painting', './assets/painting.png');
+        // this.load.image('paintingDark', './assets/....png')
         this.load.image('switch', './assets/switch.png');
         this.load.image('door', './assets/door.png');
   
@@ -38,7 +39,8 @@ class Play extends Phaser.Scene {
 
         this.clock = this.physics.add.sprite(game.config.width - 20, backWall, 'clock');
         this.clock.body.setImmovable(true);     // for solid collisions
-        this.clock.setOffset(0, -30);       // shift hitbox up
+        this.clock.setOffset(0, -30);
+               // shift hitbox up
         this.clock.body.onOverlap = true;
 
         this.switch = this.physics.add.sprite(game.config.width / 1.3, backWall - 3, 'switch');
@@ -111,6 +113,22 @@ class Play extends Phaser.Scene {
         else {
             this.player.body.setVelocityX(0);
         }
+        if (this.lightsOn) {
+            let p = this.clock.tint;
+            this.clock.tint = p;
+            this.painting.tint = p;
+            this.background.tint = p;
+            this.door.tint = p;
+            this.desk.tint = p;
+        }
+        else {
+            this.clock.tint=0;
+            this.painting.tint = 0;
+            this.background.tint = 0;
+            this.door.tint = 0;
+            this.desk.tint = 0;
+
+        }
 
         // create physics world events
         // note: you MUST use a .collide/.overlap check in update() AND set body.onCollide/body.onOverlap/.onWorldBounds to true for these to work
@@ -129,9 +147,13 @@ class Play extends Phaser.Scene {
                 console.log('lightsOn is:');
                 console.log(this.lightsOn);
             }
-            if (`${obj2.texture.key}` == 'painting' && Phaser.Input.Keyboard.JustDown(keyE)) {
+            if (`${obj2.texture.key}` == 'painting' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
                 this.scene.launch('paintingScene');
+            }
+            if (`${obj2.texture.key}` == 'painting' && this.lightsOn == false && Phaser.Input.Keyboard.JustDown(keyE)) {
+                this.scene.pause();
+                this.scene.launch('paintingSceneDark');
             }
             if (`${obj2.texture.key}` == 'door' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 // add door condition here

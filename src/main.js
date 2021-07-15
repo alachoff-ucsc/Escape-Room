@@ -8,7 +8,7 @@ let config = {
         debug: true
       }
     },
-    scene: [Menu, Play, Painting]
+    scene: [Menu, Play, Painting, PaintingDarkness]
   }
   
 let game = new Phaser.Game(config);
