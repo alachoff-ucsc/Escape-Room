@@ -30,12 +30,24 @@ class Play extends Phaser.Scene {
 
         // place room objects
         this.painting = this.physics.add.sprite(game.config.width / 3, backWall - 21, 'painting');
+
         this.door = this.physics.add.sprite(game.config.width / 1.5, backWall, 'door');
+
         this.clock = this.physics.add.sprite(game.config.width - 20, backWall, 'clock');
-        this.switch = this.physics.add.sprite(game.config.width / 1.35, backWall - 3, 'switch');
+        this.clock.body.setImmovable(true);     // for solid collisions
+        this.clock.setSize(27, 29);
+        this.clock.setOffset(0, 10);       // shift hitbox up
+
+        this.switch = this.physics.add.sprite(game.config.width / 1.3, backWall - 3, 'switch');
+
         this.player = this.physics.add.sprite(centerX, centerY, 'player');
         this.player.setCollideWorldBounds(true);
+        this.player.body.onCollide = true;
+        
         this.desk = this.physics.add.sprite(40, centerY, 'desk');
+        this.desk.setSize(70, 15);      // change the desk hitbox size
+        this.desk.setOffset(0, 20);     // shift the hitbox down
+        this.desk.body.setImmovable(true);      // for solid collisions
 
         // add audio
         this.steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
@@ -57,7 +69,8 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-
+        
+        // play footsteps sound
         if (keyLEFT.isDown || keyRIGHT.isDown || keyUP.isDown || keyDOWN.isDown) {
             // pick random from this.steps and play with a delay
             if (!this.stepping) {
@@ -65,13 +78,15 @@ class Play extends Phaser.Scene {
                 this.playStep = this.sound.add(
                     this.steps[Math.floor(Math.random() * 5)]
                 );
-                this.playStep.play({ detune: Math.floor(Math.random() * 300) });
-                this.time.delayedCall(800, () => {
+                this.playStep.play({ detune: Math.floor(Math.random() * 300), rate: 2.5, volume: 0.7});
+                this.time.delayedCall(350, () => {
                     this.stepping = false
                 }, null, this);
             }
         }
 
+
+        // player input
         if (Phaser.Input.Keyboard.JustDown(keyM)) 
             this.scene.start('menuScene');
 
@@ -93,5 +108,13 @@ class Play extends Phaser.Scene {
         else {
             this.player.body.setVelocityX(0);
         }
+
+        
+        // check collisions and overlaps; collide makes the object solid, overlap allows for overlapping of hitboxes
+        this.physics.collide(this.player, this.clock);
+        this.physics.collide(this.player, this.desk);
+        this.physics.overlap(this.player, this.door);
+        this.physics.overlap(this.player, this.painting);
+        this.physics.overlap(this.player, this.switch);
     }
 }
