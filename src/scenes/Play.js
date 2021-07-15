@@ -21,14 +21,14 @@ class Play extends Phaser.Scene {
     create () {
         // place tile sprite and set world boundaries
         this.background = this.add.tileSprite(0, 0, 502, 376, 'room').setOrigin(0, 0);
-        this.physics.world.setBounds(0, game.config.height / 4, game.config.width, game.config.height - game.config.height / 4);
+        this.physics.world.setBounds(0, game.config.height / 4 - 5, game.config.width, game.config.height - game.config.height / 4 + 5);
         this.physics.world.setBoundsCollision();
 
         // place room objects
         this.painting = this.physics.add.sprite(game.config.width / 3, backWall - 21, 'painting');
         this.door = this.physics.add.sprite(game.config.width / 1.5, backWall, 'door');
         this.clock = this.physics.add.sprite(game.config.width - 20, backWall, 'clock');
-        this.switch = this.physics.add.sprite(game.config.width / 1.4, backWall - 3, 'switch');
+        this.switch = this.physics.add.sprite(game.config.width / 1.35, backWall - 3, 'switch');
         this.player = this.physics.add.sprite(centerX, centerY, 'player');
         this.player.setCollideWorldBounds(true);
         this.desk = this.physics.add.sprite(40, centerY, 'desk');
