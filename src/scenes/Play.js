@@ -30,6 +30,7 @@ class Play extends Phaser.Scene {
 
         // place room objects
         this.painting = this.physics.add.sprite(game.config.width / 3, backWall - 21, 'painting');
+        this.painting.setOffset(0, 30)       // shift for proper observable distance
         this.painting.body.onOverlap = true;
 
         this.door = this.physics.add.sprite(game.config.width / 1.5, backWall, 'door');
@@ -37,8 +38,7 @@ class Play extends Phaser.Scene {
 
         this.clock = this.physics.add.sprite(game.config.width - 20, backWall, 'clock');
         this.clock.body.setImmovable(true);     // for solid collisions
-        this.clock.setSize(27, 29);
-        this.clock.setOffset(0, 10);       // shift hitbox up
+        this.clock.setOffset(0, -30);       // shift hitbox up
         this.clock.body.onOverlap = true;
 
         this.switch = this.physics.add.sprite(game.config.width / 1.3, backWall - 3, 'switch');
@@ -53,6 +53,14 @@ class Play extends Phaser.Scene {
         this.desk.setOffset(0, 20);     // shift the hitbox down
         this.desk.body.setImmovable(true);      // for solid collisions
 
+
+        // camera
+        this.camera = this.cameras.main;
+        this.camera.setBounds(0, 0, game.config.width, game.config.height)
+        this.camera.setZoom(1.3)
+        this.camera.setDeadzone(60, 40);
+        this.camera.startFollow(this.player);
+
         // add audio array for randomized steps
         this.steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
         this.stepping = false
@@ -65,7 +73,7 @@ class Play extends Phaser.Scene {
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         // variables
-        this.movespeed = 120;
+        this.movespeed = 140;
         this.lightsOn = true;
     }
 
@@ -118,10 +126,15 @@ class Play extends Phaser.Scene {
         this.physics.world.on('overlap', (obj1, obj2, body1, body2)=>{
             if (`${obj2.texture.key}` == 'switch' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.lightsOn = !this.lightsOn;
+                console.log('lightsOn is:');
+                console.log(this.lightsOn);
             }
             if (`${obj2.texture.key}` == 'painting' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
                 this.scene.launch('paintingScene');
+            }
+            if (`${obj2.texture.key}` == 'door' && Phaser.Input.Keyboard.JustDown(keyE)) {
+                // add door condition here
             }
         });
     }
