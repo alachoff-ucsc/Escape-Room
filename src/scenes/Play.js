@@ -15,7 +15,11 @@ class Play extends Phaser.Scene {
         this.load.image('door', './assets/door.png');
   
         // load audio
-        this.load.audio('steps', './assets/fsteps_clean.wav');
+        this.load.audio('step1', './assets/fstep1.wav');
+        this.load.audio('step2', './assets/fstep2.wav');
+        this.load.audio('step3', './assets/fstep3.wav');
+        this.load.audio('step4', './assets/fstep4.wav');
+        this.load.audio('step5', './assets/fstep5.wav');
     }
 
     create () {
@@ -34,7 +38,8 @@ class Play extends Phaser.Scene {
         this.desk = this.physics.add.sprite(40, centerY, 'desk');
 
         // add audio
-        this.steps = this.sound.add('steps');
+        this.steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
+        this.stepping = false
 
         // temporary text
         this.add.text(game.config.width / 2, game.config.height - 20, 'Press M to go to menu').setOrigin(0.5);
@@ -54,11 +59,17 @@ class Play extends Phaser.Scene {
     update() {
 
         if (keyLEFT.isDown || keyRIGHT.isDown || keyUP.isDown || keyDOWN.isDown) {
-            if (!this.steps.isPlaying)
-                this.steps.play({volume: 0.3, rate: 2.5});
-        }
-        else {
-            this.steps.stop();
+            // pick random from this.steps and play with a delay
+            if (!this.stepping) {
+                this.stepping = true
+                this.playStep = this.sound.add(
+                    this.steps[Math.floor(Math.random() * 5)]
+                );
+                this.playStep.play({ detune: Math.floor(Math.random() * 300) });
+                this.time.delayedCall(800, () => {
+                    this.stepping = false
+                }, null, this);
+            }
         }
 
         if (Phaser.Input.Keyboard.JustDown(keyM)) 
