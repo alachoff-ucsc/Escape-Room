@@ -79,7 +79,7 @@ class Play extends Phaser.Scene {
 
     update() {
         // play footsteps sound
-        if (keyW.isDown || keyA.isDown || keyS.isDown || keyD.isDown) {
+        if (this.player.body.speed != 0) {
             // pick random from this.steps and play with a delay
             if (!this.stepping) {
                 this.stepping = true
@@ -137,5 +137,21 @@ class Play extends Phaser.Scene {
                 // add door condition here
             }
         });
+
+        // if the lights are off
+        if (!this.lightsOn) {
+            this.background.setAlpha(0);
+            this.painting.setAlpha(0);
+            this.clock.setAlpha(0);
+            this.desk.setAlpha(0);
+            this.door.setAlpha(0);
+        }
+        else {
+            this.background.setAlpha(1);
+            this.painting.setAlpha(1);
+            this.clock.setAlpha(1);
+            this.desk.setAlpha(1);
+            this.door.setAlpha(1);
+        }
     }
 }
