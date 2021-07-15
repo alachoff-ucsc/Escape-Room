@@ -49,20 +49,16 @@ class Play extends Phaser.Scene {
         this.desk.setOffset(0, 20);     // shift the hitbox down
         this.desk.body.setImmovable(true);      // for solid collisions
 
-        // add audio
+        // add audio array for randomized steps
         this.steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
         this.stepping = false
-
-        // temporary text
-        this.add.text(game.config.width / 2, game.config.height - 20, 'Press M to go to menu').setOrigin(0.5);
         
         // define keys
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M);    // temporary
 
         // variables
         this.movespeed = 120;
@@ -71,7 +67,7 @@ class Play extends Phaser.Scene {
     update() {
         
         // play footsteps sound
-        if (keyLEFT.isDown || keyRIGHT.isDown || keyUP.isDown || keyDOWN.isDown) {
+        if (keyW.isDown || keyA.isDown || keyS.isDown || keyD.isDown) {
             // pick random from this.steps and play with a delay
             if (!this.stepping) {
                 this.stepping = true
@@ -85,24 +81,19 @@ class Play extends Phaser.Scene {
             }
         }
 
-
-        // player input
-        if (Phaser.Input.Keyboard.JustDown(keyM)) 
-            this.scene.start('menuScene');
-
-        if (keyUP.isDown) {
+        if (keyW.isDown) {
             this.player.body.setVelocityY(-this.movespeed);
         }
-        else if (keyDOWN.isDown) {
+        else if (keyS.isDown) {
             this.player.body.setVelocityY(this.movespeed);
         }
         else {
             this.player.body.setVelocityY(0);
         }
-        if (keyLEFT.isDown) {
+        if (keyA.isDown) {
             this.player.body.setVelocityX(-this.movespeed);
         }
-        else if (keyRIGHT.isDown) {
+        else if (keyD.isDown) {
             this.player.body.setVelocityX(this.movespeed);
         }
         else {
