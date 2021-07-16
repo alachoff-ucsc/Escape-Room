@@ -51,7 +51,7 @@ class Play extends Phaser.Scene {
         this.player.body.onCollide = true;
         
         this.desk = this.physics.add.sprite(40, centerY, 'desk');
-        this.desk.setSize(70, 15);      // change the desk hitbox size
+        this.desk.setSize(75, 15);      // change the desk hitbox size
         this.desk.setOffset(0, 20);     // shift the hitbox down
         this.desk.body.setImmovable(true);      // for solid collisions
 
@@ -122,7 +122,7 @@ class Play extends Phaser.Scene {
             this.desk.tint = p;
         }
         else {
-            this.clock.tint=0;
+            this.clock.tint = 0;
             this.painting.tint = 0;
             this.background.tint = 0;
             this.door.tint = 0;
@@ -144,8 +144,6 @@ class Play extends Phaser.Scene {
         this.physics.world.on('overlap', (obj1, obj2, body1, body2)=>{
             if (`${obj2.texture.key}` == 'switch' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.lightsOn = !this.lightsOn;
-                console.log('lightsOn is:');
-                console.log(this.lightsOn);
             }
             if (`${obj2.texture.key}` == 'painting' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
@@ -156,7 +154,8 @@ class Play extends Phaser.Scene {
                 this.scene.launch('paintingDarkScene');
             }
             if (`${obj2.texture.key}` == 'door' && Phaser.Input.Keyboard.JustDown(keyE)) {
-                // add door condition here
+                this.scene.stop();
+                this.scene.launch('winScene');
             }
         });
     }
