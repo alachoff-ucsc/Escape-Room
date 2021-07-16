@@ -5,6 +5,10 @@ class PaintingDarkness extends Phaser.Scene {
 
     preload () {
         this.load.image('paintingDark', './assets/Darkness.png');
+        this.load.image('paintingDark2', './assets/Scaryface2.png');
+        this.load.image('paintingDark3', './assets/Scaryface3.png');
+        this.load.image('paintingDark4', './assets/Scaryface4.png');
+        this.load.image('paintingDark5', './assets/Scaryface5.png');
     }
 
     create () {
