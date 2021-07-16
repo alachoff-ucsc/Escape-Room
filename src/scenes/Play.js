@@ -153,7 +153,7 @@ class Play extends Phaser.Scene {
             }
             if (`${obj2.texture.key}` == 'painting' && this.lightsOn == false && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
-                this.scene.launch('paintingSceneDark');
+                this.scene.launch('paintingDarkScene');
             }
             if (`${obj2.texture.key}` == 'door' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 // add door condition here
