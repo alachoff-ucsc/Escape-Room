@@ -28,16 +28,16 @@ class PaintingDark extends Phaser.Scene {
         if (this.timer == 0) {
             this.paint = this.add.image(0, 0, 'paintingDark').setOrigin(0);
         }
-        if (this.timer == 750) {
+        if (this.timer == 400) {
             this.paint2 = this.add.image(0, 0, 'paintingDark2').setOrigin(0);
         }
-        if (this.timer == 1500) {
+        if (this.timer == 700) {
             this.paint3 = this.add.image(0, 0, 'paintingDark3').setOrigin(0);
         }
-        if (this.timer == 2250) {
+        if (this.timer == 1000) {
             this.paint4 = this.add.image(0, 0, 'paintingDark4').setOrigin(0);
         }
-        if (this.timer == 3000) {
+        if (this.timer == 1300) {
             this.paint5 = this.add.image(0, 0, 'paintingDark5').setOrigin(0);
             this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
         }

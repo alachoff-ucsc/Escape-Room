@@ -11,9 +11,11 @@ class Play extends Phaser.Scene {
         this.load.image('desk', './assets/desk.png');
         this.load.image('clock', './assets/clock.png');
         this.load.image('painting', './assets/painting.png');
+        this.load.image('blank', './assets/blank.png');
         // this.load.image('paintingDark', './assets/....png')
         this.load.image('switch', './assets/switch.png');
         this.load.image('door', './assets/door.png');
+
   
         // load audio
         this.load.audio('step1', './assets/fstep1.wav');
@@ -49,6 +51,10 @@ class Play extends Phaser.Scene {
         this.player = this.physics.add.sprite(centerX, centerY, 'player');
         this.player.setCollideWorldBounds(true);
         this.player.body.onCollide = true;
+
+        this.deskint = this.physics.add.sprite(35, centerY-10, 'blank');
+        this.deskint.setSize(70, 15);
+        this.deskint.body.onOverlap = true;
         
         this.desk = this.physics.add.sprite(40, centerY, 'desk');
         this.desk.setSize(75, 15);      // change the desk hitbox size
@@ -138,6 +144,7 @@ class Play extends Phaser.Scene {
         this.physics.collide(this.player, this.desk);
         this.physics.overlap(this.player, this.door);
         this.physics.overlap(this.player, this.painting);
+        this.physics.overlap(this.player, this.deskint);
         this.physics.overlap(this.player, this.switch);
 
         // check for interactions
@@ -148,6 +155,10 @@ class Play extends Phaser.Scene {
             if (`${obj2.texture.key}` == 'painting' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
                 this.scene.launch('paintingScene');
+            }
+            if (`${obj2.texture.key}` == 'blank' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
+                this.scene.pause();
+                this.scene.launch('deskScene');
             }
             if (`${obj2.texture.key}` == 'painting' && this.lightsOn == false && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
