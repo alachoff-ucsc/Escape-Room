@@ -4,7 +4,7 @@ class PaintingDark extends Phaser.Scene {
     }
 
     preload () {
-        this.load.image('paintingDark', './assets/Darkness.png');
+        this.load.image('paintingDark', './assets/paintingDark.png');
         this.load.image('paintingDark2', './assets/Scaryface2.png');
         this.load.image('paintingDark3', './assets/Scaryface3.png');
         this.load.image('paintingDark4', './assets/Scaryface4.png');
@@ -29,19 +29,15 @@ class PaintingDark extends Phaser.Scene {
             this.paint = this.add.image(0, 0, 'paintingDark').setOrigin(0);
         }
         if (this.timer == 400) {
-            //this.paint.destroy();
             this.paint2 = this.add.image(0, 0, 'paintingDark2').setOrigin(0);
         }
-        if (this.timer == 500) {
-            //this.paint2.destroy();
+        if (this.timer == 700) {
             this.paint3 = this.add.image(0, 0, 'paintingDark3').setOrigin(0);
         }
-        if (this.timer == 700) {
-            //this.paint3.destroy();
+        if (this.timer == 1000) {
             this.paint4 = this.add.image(0, 0, 'paintingDark4').setOrigin(0);
         }
-        if (this.timer == 900) {
-            //this.paint4.destroy();
+        if (this.timer == 1300) {
             this.paint5 = this.add.image(0, 0, 'paintingDark5').setOrigin(0);
             this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
         }

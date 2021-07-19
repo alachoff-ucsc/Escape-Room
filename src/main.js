@@ -5,10 +5,11 @@ let config = {
     physics: {
       default: 'arcade',
       arcade: {
-        debug: true
+        //debug: true
       }
     },
     scene: [Menu, Play, Painting, PaintingDark, DeskLight]
+    scene: [Menu, Play, Painting, PaintingDark, Win, DeskLight]
   }
   
 let game = new Phaser.Game(config);
