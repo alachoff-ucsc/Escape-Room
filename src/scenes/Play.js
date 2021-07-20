@@ -158,10 +158,10 @@ class Play extends Phaser.Scene {
         this.physics.world.on('overlap', (obj1, obj2, body1, body2)=>{
             if (`${obj2.texture.key}` == 'switch' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 if (this.lightsOn) {
-                    this.sound.play('switchOff')
+                    this.sound.play('switchOff');
                 }
                 else if (!this.lightsOn) {
-                    this.sound.play('switchOn')
+                    this.sound.play('switchOn');
                 }
                 this.lightsOn = !this.lightsOn;
             }
