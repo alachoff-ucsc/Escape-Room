@@ -156,6 +156,7 @@ class Play extends Phaser.Scene {
 
         // check for interactions
         this.physics.world.on('overlap', (obj1, obj2, body1, body2)=>{
+            // lightswitch
             if (`${obj2.texture.key}` == 'switch' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 if (this.lightsOn) {
                     this.sound.play('switchOff');
@@ -165,18 +166,26 @@ class Play extends Phaser.Scene {
                 }
                 this.lightsOn = !this.lightsOn;
             }
+            
+            // painting light
             if (`${obj2.texture.key}` == 'painting' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
                 this.scene.launch('paintingScene');
             }
+            
+            // desk
             if (`${obj2.texture.key}` == 'blank' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
                 this.scene.launch('deskScene');
             }
+
+            // painting dark
             if (`${obj2.texture.key}` == 'painting' && this.lightsOn == false && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
                 this.scene.launch('paintingDarkScene');
             }
+
+            // door
             if (`${obj2.texture.key}` == 'door' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.sound.play('doorOpen')
                 this.scene.stop();
