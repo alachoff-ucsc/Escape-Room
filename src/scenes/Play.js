@@ -94,7 +94,7 @@ class Play extends Phaser.Scene {
 
     update() {
         // play footsteps sound
-        if (keyW.isDown || keyA.isDown || keyS.isDown || keyD.isDown) {
+        if (this.player.body.speed != 0) {
             // pick random from this.steps and play with a delay
             if (!this.stepping) {
                 this.stepping = true;
@@ -102,12 +102,14 @@ class Play extends Phaser.Scene {
                     this.steps[Math.floor(Math.random() * 5)]
                 );
                 this.playStep.play({ detune: Math.floor(Math.random() * 300), rate: 1.5, volume: 0.7});
-                this.time.delayedCall(350, () => {
+                this.time.delayedCall(this.movespeed * 2.5, () => {
                     this.stepping = false;
                 }, null, this);
             }
         }
+        console.log(this.player.body.speed);
 
+        // movement stuff
         if (keyW.isDown) {
             this.player.body.setVelocityY(-this.movespeed);
         }
@@ -126,6 +128,8 @@ class Play extends Phaser.Scene {
         else {
             this.player.body.setVelocityX(0);
         }
+
+        // turns lights on/off
         if (this.lightsOn) {
             let p = this.clock.tint;
             this.clock.tint = p;
