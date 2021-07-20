@@ -107,22 +107,23 @@ class Play extends Phaser.Scene {
                 }, null, this);
             }
         }
-        console.log(this.player.body.speed);
+        // console.log(this.player.body.speed);
+        // console.log(this.player.body.blocked);
 
         // movement stuff
-        if (keyW.isDown) {
+        if (keyW.isDown && !this.player.body.blocked.up) {
             this.player.body.setVelocityY(-this.movespeed);
         }
-        else if (keyS.isDown) {
+        else if (keyS.isDown && !this.player.body.blocked.down) {
             this.player.body.setVelocityY(this.movespeed);
         }
         else {
             this.player.body.setVelocityY(0);
         }
-        if (keyA.isDown) {
+        if (keyA.isDown && !this.player.body.blocked.left) {
             this.player.body.setVelocityX(-this.movespeed);
         }
-        else if (keyD.isDown) {
+        else if (keyD.isDown && !this.player.body.blocked.right) {
             this.player.body.setVelocityX(this.movespeed);
         }
         else {
