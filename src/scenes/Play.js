@@ -7,15 +7,22 @@ class Play extends Phaser.Scene {
         // load images and tile sprites
   
         this.load.image('room', './assets/room1.png');
-        this.load.image('player', './assets/player1.png');
+        // this.load.image('player', './assets/player1.png');
         this.load.image('desk', './assets/desk.png');
         this.load.image('clock', './assets/clock.png');
         this.load.image('painting', './assets/painting.png');
         this.load.image('blank', './assets/blank.png');
+        this.load.image('blank2', './assets/blank2.png');
         // this.load.image('paintingDark', './assets/....png')
+
         this.load.image('switch', './assets/switch.png');
         this.load.image('door', './assets/door.png');
+        this.load.image('shelves', './assets/bookshelves2.png');
 
+        this.load.spritesheet('player', './assets/PlayerSpriteSheet.png', {
+            frameWidth: 15,
+            frameHeight: 34,
+        });
   
         // load audio
         this.load.audio('step1', './assets/fstep1.wav');
@@ -48,6 +55,10 @@ class Play extends Phaser.Scene {
         this.switch = this.physics.add.sprite(game.config.width / 1.3, backWall - 3, 'switch');
         this.switch.body.onOverlap = true;
 
+        this.rug = this.physics.add.sprite(centerX+2, centerY+60, 'blank2');
+        this.rug.setSize(20, 60);
+        this.rug.body.onOverlap = true;
+
         this.player = this.physics.add.sprite(centerX, centerY, 'player');
         this.player.setCollideWorldBounds(true);
         this.player.body.onCollide = true;
@@ -55,12 +66,41 @@ class Play extends Phaser.Scene {
         this.deskint = this.physics.add.sprite(35, centerY-10, 'blank');
         this.deskint.setSize(70, 15);
         this.deskint.body.onOverlap = true;
+
+        this.shelf = this.physics.add.sprite(7, centerY+100, 'shelves');
+        this.shelf.setSize(24, 54);
+        this.shelf.body.onOverlap = true;
         
         this.desk = this.physics.add.sprite(40, centerY, 'desk');
         this.desk.setSize(70, 15);      // change the desk hitbox size
         this.desk.setOffset(0, 20);     // shift the hitbox down
         this.desk.body.setImmovable(true);      // for solid collisions
 
+        // player animations (walking)
+        this.anims.create({
+            key: 'down',
+            frameRate: 8,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 2 }),
+        });
+        this.anims.create({
+            key: 'up',
+            frameRate: 8,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('player', { start: 3, end: 5 }),
+        });
+        this.anims.create({
+            key: 'left',
+            frameRate: 8,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('player', { start: 6, end: 8 }),
+        });
+        this.anims.create({
+            key: 'right',
+            frameRate: 8,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('player', { start: 9, end: 11 }),
+        });
 
         // camera
         this.camera = this.cameras.main;
@@ -103,22 +143,34 @@ class Play extends Phaser.Scene {
 
         if (keyW.isDown) {
             this.player.body.setVelocityY(-this.movespeed);
+            this.player.direction = "up";
         }
         else if (keyS.isDown) {
             this.player.body.setVelocityY(this.movespeed);
+            this.player.direction = "down";
         }
         else {
             this.player.body.setVelocityY(0);
         }
         if (keyA.isDown) {
             this.player.body.setVelocityX(-this.movespeed);
+            this.player.direction = "left";
         }
         else if (keyD.isDown) {
             this.player.body.setVelocityX(this.movespeed);
+            this.player.direction = "right"
         }
         else {
             this.player.body.setVelocityX(0);
         }
+
+        if (keyW.isDown || keyS.isDown || keyA.isDown || keyD.isDown) {
+            this.player.anims.play(`${this.player.direction}`, true);
+        }
+        if (!(keyW.isDown || keyS.isDown || keyA.isDown || keyD.isDown)) {
+            this.player.anims.pause()
+        }
+
         if (this.lightsOn) {
             let p = this.clock.tint;
             this.clock.tint = p;
@@ -144,8 +196,10 @@ class Play extends Phaser.Scene {
         this.physics.collide(this.player, this.desk);
         this.physics.overlap(this.player, this.door);
         this.physics.overlap(this.player, this.painting);
+        this.physics.overlap(this.player, this.rug);
         this.physics.overlap(this.player, this.deskint);
         this.physics.overlap(this.player, this.switch);
+        this.physics.overlap(this.player, this.shelf);
 
         // check for interactions
         this.physics.world.on('overlap', (obj1, obj2, body1, body2)=>{
@@ -168,6 +222,18 @@ class Play extends Phaser.Scene {
             }
             if (`${obj2.texture.key}` == 'door' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 // add door condition here
+            }
+            if (`${obj2.texture.key}` == 'blank2' && Phaser.Input.Keyboard.JustDown(keyE)) {
+                // this.scene.pause();
+                // this.scene.launch('deskScene');
+                this.add.image(0, 0, 'shelves').setOrigin(0);
+                
+            }
+            if (`${obj2.texture.key}` == 'shelves' && Phaser.Input.Keyboard.JustDown(keyE)) {
+                this.scene.pause();
+                this.scene.launch('Clock', 0);
+                // this.add.image(0, 0, 'shelves').setOrigin(0);
+
             }
         });
     }
