@@ -18,11 +18,15 @@ class Play extends Phaser.Scene {
 
   
         // load audio
-        this.load.audio('step1', './assets/fstep1.wav');
-        this.load.audio('step2', './assets/fstep2.wav');
-        this.load.audio('step3', './assets/fstep3.wav');
-        this.load.audio('step4', './assets/fstep4.wav');
-        this.load.audio('step5', './assets/fstep5.wav');
+        this.load.audio('step1', './assets/audio/fstep1.wav');
+        this.load.audio('step2', './assets/audio/fstep2.wav');
+        this.load.audio('step3', './assets/audio/fstep3.wav');
+        this.load.audio('step4', './assets/audio/fstep4.wav');
+        this.load.audio('step5', './assets/audio/fstep5.wav');
+        this.load.audio('doorJostle', './assets/audio/door_jostle.wav');
+        this.load.audio('doorOpen', './assets/audio/door_open.wav');
+        this.load.audio('switchOn', './assets/audio/switch_on.wav');
+        this.load.audio('switchOff', './assets/audio/switch_off.wav');
     }
 
     create () {
@@ -94,7 +98,7 @@ class Play extends Phaser.Scene {
                 this.playStep = this.sound.add(
                     this.steps[Math.floor(Math.random() * 5)]
                 );
-                this.playStep.play({ detune: Math.floor(Math.random() * 300), rate: 2.5, volume: 0.7});
+                this.playStep.play({ detune: Math.floor(Math.random() * 300), rate: 1.5, volume: 0.7});
                 this.time.delayedCall(350, () => {
                     this.stepping = false
                 }, null, this);
