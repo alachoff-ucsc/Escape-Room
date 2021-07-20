@@ -230,7 +230,7 @@ class Play extends Phaser.Scene {
             }
             if (`${obj2.texture.key}` == 'shelves' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
-                this.scene.launch('Clock', 0);
+                this.scene.launch('Clock', {x:0});
                 // this.add.image(0, 0, 'shelves').setOrigin(0);
 
             }
