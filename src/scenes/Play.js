@@ -27,6 +27,7 @@ class Play extends Phaser.Scene {
         this.load.audio('doorOpen', './assets/audio/door_open.wav');
         this.load.audio('switchOn', './assets/audio/switch_on.wav');
         this.load.audio('switchOff', './assets/audio/switch_off.wav');
+        this.load.audio('clockLoop', './assets/audio/clock_loop.wav');
     }
 
     create () {
@@ -75,7 +76,9 @@ class Play extends Phaser.Scene {
 
         // add audio array for randomized steps
         this.steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
-        this.stepping = false
+        this.stepping = false;
+        this.clockLoop = this.sound.add('clockLoop', { loop: true});
+        this.clockLoop.play()
         
         // define keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -94,13 +97,13 @@ class Play extends Phaser.Scene {
         if (keyW.isDown || keyA.isDown || keyS.isDown || keyD.isDown) {
             // pick random from this.steps and play with a delay
             if (!this.stepping) {
-                this.stepping = true
+                this.stepping = true;
                 this.playStep = this.sound.add(
                     this.steps[Math.floor(Math.random() * 5)]
                 );
                 this.playStep.play({ detune: Math.floor(Math.random() * 300), rate: 1.5, volume: 0.7});
                 this.time.delayedCall(350, () => {
-                    this.stepping = false
+                    this.stepping = false;
                 }, null, this);
             }
         }
