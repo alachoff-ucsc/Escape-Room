@@ -1,6 +1,6 @@
 class Clock extends Phaser.Scene {
     constructor() {
-        super("Clock");
+        super("clockScene");
     }
       // add object to existing scene
       preload () {
@@ -10,8 +10,7 @@ class Clock extends Phaser.Scene {
     create (data) {
         this.x = data.x
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
-        if (this.x==0) {
-            
+        if (this.x==0) {  
             this.add.image(0, 0, 'clockdoor').setOrigin(0);
         }
         if (this.x==1) {

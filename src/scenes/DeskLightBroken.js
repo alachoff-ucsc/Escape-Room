@@ -1,6 +1,6 @@
-class DeskLight extends Phaser.Scene {
+class DeskLightBroken extends Phaser.Scene {
     constructor() {
-        super("deskScene");
+        super("deskLightBrokenScene");
     }
 
     preload () {

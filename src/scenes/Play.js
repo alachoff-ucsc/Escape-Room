@@ -10,7 +10,7 @@ class Play extends Phaser.Scene {
         this.load.image('desk', './assets/desk.png');
         this.load.image('clock', './assets/clock.png');
         this.load.image('painting', './assets/painting.png');
-        this.load.image('blank', './assets/blank.png');
+        this.load.image('deskHitBox', './assets/blank.png');
         this.load.image('blank2', './assets/blank2.png');
         this.load.image('blank3', './assets/blank3.png');
         // this.load.image('paintingDark', './assets/....png')
@@ -78,9 +78,9 @@ class Play extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
         this.player.body.onCollide = true;
 
-        this.deskint = this.physics.add.sprite(35, centerY-10, 'blank');
-        this.deskint.setSize(70, 15);
-        this.deskint.body.onOverlap = true;
+        this.deskHitBox = this.physics.add.sprite(35, centerY-10, 'deskHitBox');
+        this.deskHitBox.setSize(70, 15);
+        this.deskHitBox.body.onOverlap = true;
 
         this.shelf = this.physics.add.sprite(7, centerY+100, 'shelves');
         this.shelf.setSize(24, 54);
@@ -128,7 +128,7 @@ class Play extends Phaser.Scene {
         this.steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
         this.stepping = false;
         this.clockLoop = this.sound.add('clockLoop', { loop: true});
-        this.clockLoop.play()
+        this.clockLoop.play({ rate: 1.5, volume: 0.7})
         
         // define keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -140,6 +140,9 @@ class Play extends Phaser.Scene {
         // variables
         this.movespeed = 140;
         this.lightsOn = true;
+        this.obtainedTool = false;
+        this.obtainedKey = false;
+        this.clockReady = false;
         this.player.direction;
     }
 
@@ -219,7 +222,7 @@ class Play extends Phaser.Scene {
         this.physics.overlap(this.player, this.door);
         this.physics.overlap(this.player, this.painting);
         this.physics.overlap(this.player, this.rug);
-        this.physics.overlap(this.player, this.deskint);
+        this.physics.overlap(this.player, this.deskHitBox);
         this.physics.overlap(this.player, this.switch);
         this.physics.overlap(this.player, this.shelf);
         this.physics.overlap(this.player, this.clockdoor);
@@ -248,9 +251,16 @@ class Play extends Phaser.Scene {
             }
             
             // desk
-            if (`${obj2.texture.key}` == 'blank' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
-                this.scene.pause();
-                this.scene.launch('deskScene');
+            if (`${obj2.texture.key}` == 'deskHitBox' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
+                if (this.obtainedTool) {
+                    this.scene.pause();
+                    this.scene.launch('deskLightBrokenScene');
+                    this.obtainedKey = true;
+                }
+                else {
+                    this.scene.pause();
+                    this.scene.launch('deskLightScene');
+                }
             }
 
             // painting dark
@@ -264,19 +274,41 @@ class Play extends Phaser.Scene {
                 this.scene.stop();
                 this.scene.launch('winScene');
             }
+
+            // carpet
             if (`${obj2.texture.key}` == 'blank2' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 // this.scene.pause();
                 // this.scene.launch('deskScene');
-                this.add.image(0, 0, 'shelves').setOrigin(0);
-                
+                // this.add.image(0, 0, 'shelves').setOrigin(0);
+            }
+
+            // clock
+            if (`${obj2.texture.key}` == 'clock' && Phaser.Input.Keyboard.JustDown(keyE)) {
+                if (this.obtainedKey == true) {
+                    this.scene.pause();
+                    this.scene.launch('clockScene');
+                }
             }
             if (`${obj2.texture.key}` == 'blank3' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
                 // this.scene.launch('Clock', {x:0});
                 this.scene.launch('Clock', {x:rando4})
                 // this.add.image(0, 0, 'shelves').setOrigin(0);
-
             }
+            // shelves
+            if (`${obj2.texture.key}` == 'shelves' && Phaser.Input.Keyboard.JustDown(keyE)) {
+                this.obtainedText = this.add.text(this.camera.centerX - 120, this.camera.centerY + 100, 'Obtained: Tool').setOrigin(0.5);
+                this.obtainedText.setScrollFactor(0, 0);        // setScrollFactor(0,0) makes the text follow the camera
+                this.obtainedTool = true;
+            }
+
+            // if you have the key, replace obtained: tool with obtained: key
+            if (this.obtainedKey && this.clockReady == false) {
+                this.clockReady = true;       // set true to avoid looping
+                this.obtainedText = this.add.text(this.camera.centerX - 125, this.camera.centerY + 115, 'Obtained: Key').setOrigin(0.5);
+                this.obtainedText.setScrollFactor(0, 0);        // setScrollFactor(0,0) makes the text follow the camera
+            }
+                
         });
     }
 }

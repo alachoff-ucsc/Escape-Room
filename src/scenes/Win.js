@@ -21,7 +21,6 @@ class Win extends Phaser.Scene {
         this.sound.stopAll();
         this.sound.play('doorOpen');
 
-
         this.add.text(game.config.width/2, game.config.height/2, 'YOU ESCAPED', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/1.5, 'Press SPACE to return to main menu', menuConfig).setOrigin(0.5);
     }
