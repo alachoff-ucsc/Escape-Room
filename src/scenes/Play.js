@@ -268,7 +268,7 @@ class Play extends Phaser.Scene {
             // painting dark
             if (`${obj2.texture.key}` == 'painting' && this.lightsOn == false && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
-                this.scene.launch('paintingDarkScene');
+                this.scene.launch('paintingDarkScene', {j:rando3});
             }
 
             // door

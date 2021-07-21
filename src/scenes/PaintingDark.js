@@ -9,9 +9,13 @@ class PaintingDark extends Phaser.Scene {
         this.load.image('paintingDark3', './assets/Scaryface3.png');
         this.load.image('paintingDark4', './assets/Scaryface4.png');
         this.load.image('paintingDark5', './assets/Scaryface5.png');
+        this.load.image('fingers3', './assets/Fingers3.png');
+        this.load.image('fingers4', './assets/Fingers4.png');
+        this.load.image('fingers9', './assets/Fingers9.png');
     }
 
-    create () {
+    create (data) {
+        this.j = data.j
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
         
@@ -19,7 +23,7 @@ class PaintingDark extends Phaser.Scene {
         this.timer = 0;
     }
 
-    update() {
+    update() { 
         if (Phaser.Input.Keyboard.JustDown(keyC)) {
             this.scene.stop();
             this.scene.resume('playScene');
@@ -40,6 +44,21 @@ class PaintingDark extends Phaser.Scene {
         if (this.timer == 1300) {
             this.paint5 = this.add.image(0, 0, 'paintingDark5').setOrigin(0);
             this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
+        }
+        if (this.timer == 1450) {
+            console.log(this)
+            if (this.j==0) {
+                this.paint6 = this.add.image(0, 0, 'fingers3').setOrigin(0);
+                this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
+            }
+            if (this.j==1) {
+                this.paint7 = this.add.image(0, 0, 'fingers4').setOrigin(0);
+                this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
+            }
+            if (this.j==2) {
+                this.paint8 = this.add.image(0, 0, 'fingers9').setOrigin(0);
+                this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
+            }
         }
         this.timer++;
     }
