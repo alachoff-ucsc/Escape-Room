@@ -17,6 +17,9 @@ class Clock extends Phaser.Scene {
         if (this.x==1) {
             this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the vase').setOrigin(0.5);
         }
+        if (this.x==2) {
+            this.add.text(centerX, game.config.height - 20, 'Get a load of this').setOrigin(0.5);
+        }
         
         console.log(this)
     }

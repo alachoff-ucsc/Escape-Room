@@ -13,6 +13,7 @@ class Play extends Phaser.Scene {
         this.load.image('painting', './assets/painting.png');
         this.load.image('blank', './assets/blank.png');
         this.load.image('blank2', './assets/blank2.png');
+        this.load.image('blank3', './assets/blank3.png');
         // this.load.image('paintingDark', './assets/....png')
 
         this.load.image('switch', './assets/switch.png');
@@ -34,6 +35,12 @@ class Play extends Phaser.Scene {
 
     create () {
         // place tile sprite and set world boundaries
+        // var rando1 = Phaser.Math.Between(0, 2);
+        // var rando2 = Phaser.Math.Between(2, 4);
+        // var rando3 = Phaser.Math.Between(4, 7);
+        // var rando4 = Phaser.Math.Between(7, 9);
+
+
         this.background = this.add.tileSprite(0, 0, 502, 376, 'room').setOrigin(0, 0);
         this.physics.world.setBounds(0, game.config.height / 4 - 5, game.config.width, game.config.height - game.config.height / 4 + 5);
         this.physics.world.setBoundsCollision();
@@ -51,6 +58,10 @@ class Play extends Phaser.Scene {
         this.clock.setOffset(0, -30);
                // shift hitbox up
         this.clock.body.onOverlap = true;
+
+        this.clockdoor = this.physics.add.sprite(game.config.width - 20, backWall+20, 'blank3');
+        this.clockdoor.setSize(32, 24);
+        this.clockdoor.body.onOverlap = true;
 
         this.switch = this.physics.add.sprite(game.config.width / 1.3, backWall - 3, 'switch');
         this.switch.body.onOverlap = true;
@@ -200,6 +211,11 @@ class Play extends Phaser.Scene {
         this.physics.overlap(this.player, this.deskint);
         this.physics.overlap(this.player, this.switch);
         this.physics.overlap(this.player, this.shelf);
+        this.physics.overlap(this.player, this.clockdoor);
+        var rando1 = Phaser.Math.Between(0, 2);
+        var rando2 = Phaser.Math.Between(0, 2);
+        var rando3 = Phaser.Math.Between(0, 2);
+        var rando4 = Phaser.Math.Between(0, 2);
 
         // check for interactions
         this.physics.world.on('overlap', (obj1, obj2, body1, body2)=>{
@@ -228,9 +244,10 @@ class Play extends Phaser.Scene {
                 this.add.image(0, 0, 'shelves').setOrigin(0);
                 
             }
-            if (`${obj2.texture.key}` == 'shelves' && Phaser.Input.Keyboard.JustDown(keyE)) {
+            if (`${obj2.texture.key}` == 'blank3' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
-                this.scene.launch('Clock', {x:0});
+                // this.scene.launch('Clock', {x:0});
+                this.scene.launch('Clock', {x:rando4})
                 // this.add.image(0, 0, 'shelves').setOrigin(0);
 
             }
