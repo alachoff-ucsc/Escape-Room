@@ -7,7 +7,6 @@ class Play extends Phaser.Scene {
         // load images and tile sprites
   
         this.load.image('room', './assets/room1.png');
-        // this.load.image('player', './assets/player1.png');
         this.load.image('desk', './assets/desk.png');
         this.load.image('clock', './assets/clock.png');
         this.load.image('painting', './assets/painting.png');
@@ -20,17 +19,22 @@ class Play extends Phaser.Scene {
         this.load.image('door', './assets/door.png');
         this.load.image('shelves', './assets/bookshelves2.png');
 
-        this.load.spritesheet('player', './assets/PlayerSpriteSheet.png', {
+        this.load.spritesheet('player', './assets/playerSpriteSheet.png', {
             frameWidth: 15,
             frameHeight: 34,
         });
   
         // load audio
-        this.load.audio('step1', './assets/fstep1.wav');
-        this.load.audio('step2', './assets/fstep2.wav');
-        this.load.audio('step3', './assets/fstep3.wav');
-        this.load.audio('step4', './assets/fstep4.wav');
-        this.load.audio('step5', './assets/fstep5.wav');
+        this.load.audio('step1', './assets/audio/fstep1.wav');
+        this.load.audio('step2', './assets/audio/fstep2.wav');
+        this.load.audio('step3', './assets/audio/fstep3.wav');
+        this.load.audio('step4', './assets/audio/fstep4.wav');
+        this.load.audio('step5', './assets/audio/fstep5.wav');
+        this.load.audio('doorJostle', './assets/audio/door_jostle.wav');
+        this.load.audio('doorOpen', './assets/audio/door_open.wav');
+        this.load.audio('switchOn', './assets/audio/switch_on.wav');
+        this.load.audio('switchOff', './assets/audio/switch_off.wav');
+        this.load.audio('clockLoop', './assets/audio/clock_loop.wav');
     }
 
     create () {
@@ -56,7 +60,7 @@ class Play extends Phaser.Scene {
         this.clock = this.physics.add.sprite(game.config.width - 20, backWall, 'clock');
         this.clock.body.setImmovable(true);     // for solid collisions
         this.clock.setOffset(0, -30);
-               // shift hitbox up
+        // shift hitbox up
         this.clock.body.onOverlap = true;
 
         this.clockdoor = this.physics.add.sprite(game.config.width - 20, backWall+20, 'blank3');
@@ -122,7 +126,9 @@ class Play extends Phaser.Scene {
 
         // add audio array for randomized steps
         this.steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
-        this.stepping = false
+        this.stepping = false;
+        this.clockLoop = this.sound.add('clockLoop', { loop: true});
+        this.clockLoop.play()
         
         // define keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -134,42 +140,47 @@ class Play extends Phaser.Scene {
         // variables
         this.movespeed = 140;
         this.lightsOn = true;
+        this.player.direction;
     }
 
     update() {
         // play footsteps sound
-        if (keyW.isDown || keyA.isDown || keyS.isDown || keyD.isDown) {
+        if (this.player.body.speed != 0) {
             // pick random from this.steps and play with a delay
             if (!this.stepping) {
-                this.stepping = true
+                this.stepping = true;
                 this.playStep = this.sound.add(
                     this.steps[Math.floor(Math.random() * 5)]
                 );
-                this.playStep.play({ detune: Math.floor(Math.random() * 300), rate: 2.5, volume: 0.7});
-                this.time.delayedCall(350, () => {
-                    this.stepping = false
+                this.playStep.play({ detune: Math.floor(Math.random() * 300), rate: 1.5, volume: 0.7});
+                this.time.delayedCall(this.movespeed * 2.5, () => {
+                    this.stepping = false;
                 }, null, this);
             }
         }
+        // console.log(this.player.body.speed);
+        // console.log(this.player.body.blocked);
 
-        if (keyW.isDown) {
+
+        // player movement and walking animation
+        if (keyW.isDown && !this.player.body.blocked.up) {
             this.player.body.setVelocityY(-this.movespeed);
             this.player.direction = "up";
         }
-        else if (keyS.isDown) {
+        else if (keyS.isDown && !this.player.body.blocked.down) {
             this.player.body.setVelocityY(this.movespeed);
             this.player.direction = "down";
         }
         else {
             this.player.body.setVelocityY(0);
         }
-        if (keyA.isDown) {
+        if (keyA.isDown && !this.player.body.blocked.left) {
             this.player.body.setVelocityX(-this.movespeed);
             this.player.direction = "left";
         }
-        else if (keyD.isDown) {
+        else if (keyD.isDown && !this.player.body.blocked.right) {
             this.player.body.setVelocityX(this.movespeed);
-            this.player.direction = "right"
+            this.player.direction = "right";
         }
         else {
             this.player.body.setVelocityX(0);
@@ -219,21 +230,36 @@ class Play extends Phaser.Scene {
 
         // check for interactions
         this.physics.world.on('overlap', (obj1, obj2, body1, body2)=>{
+            // lightswitch
             if (`${obj2.texture.key}` == 'switch' && Phaser.Input.Keyboard.JustDown(keyE)) {
+                if (this.lightsOn) {
+                    this.sound.play('switchOff');
+                }
+                else if (!this.lightsOn) {
+                    this.sound.play('switchOn');
+                }
                 this.lightsOn = !this.lightsOn;
             }
+            
+            // painting light
             if (`${obj2.texture.key}` == 'painting' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
                 this.scene.launch('paintingScene');
             }
+            
+            // desk
             if (`${obj2.texture.key}` == 'blank' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
                 this.scene.launch('deskScene');
             }
+
+            // painting dark
             if (`${obj2.texture.key}` == 'painting' && this.lightsOn == false && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.pause();
                 this.scene.launch('paintingDarkScene');
             }
+
+            // door
             if (`${obj2.texture.key}` == 'door' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.stop();
                 this.scene.launch('winScene');
