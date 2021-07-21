@@ -192,7 +192,6 @@ class Play extends Phaser.Scene {
 
             // door
             if (`${obj2.texture.key}` == 'door' && Phaser.Input.Keyboard.JustDown(keyE)) {
-                this.sound.play('doorOpen')
                 this.scene.stop();
                 this.scene.launch('winScene');
             }
