@@ -203,6 +203,7 @@ class Play extends Phaser.Scene {
             this.background.tint = p;
             this.door.tint = p;
             this.desk.tint = p;
+            this.shelf.tint = p;
         }
         else {
             this.clock.tint = 0;
@@ -210,6 +211,7 @@ class Play extends Phaser.Scene {
             this.background.tint = 0;
             this.door.tint = 0;
             this.desk.tint = 0;
+            this.shelf.tint = 0;
 
         }
 
@@ -283,16 +285,35 @@ class Play extends Phaser.Scene {
             }
 
             // clock
-            if (`${obj2.texture.key}` == 'clock' && Phaser.Input.Keyboard.JustDown(keyE)) {
-                if (this.obtainedKey == true) {
-                    this.scene.pause();
-                    this.scene.launch('clockScene');
+            // if (`${obj2.texture.key}` == 'clock' && Phaser.Input.Keyboard.JustDown(keyE)) {
+            //     if (this.obtainedKey == true) {
+            //         this.scene.pause();
+            //         this.scene.launch('clockScene');
+            //     }
+            // }
+            if (`${obj2.texture.key}` == 'blank3' && Phaser.Input.Keyboard.JustDown(keyE)) {
+                if (this.obtainedKey == false) {
+                    if (this.lightsOn) {
+                        this.scene.pause();
+                        console.log(this)
+                        // this.scene.launch('Clock', {x:0});
+                        this.scene.launch('Clock', {x:3});
+                    } 
+                    if (!this.lightsOn) {
+                        console.log(this)
+                        this.scene.pause();
+                        this.scene.launch('Clock', {x:4});
+                    }
+                } else {
+                    if (this.lightsOn) {
+                        this.scene.launch('Clock', {x:5});
+                    }
+                    if (!this.lightsOn) {
+                        this.scene.launch('Clock', {x:rando4});
+                    }
+                    
                 }
-            }
-            if (`${obj2.texture.key}` == 'blank3' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
-                this.scene.pause();
-                // this.scene.launch('Clock', {x:0});
-                this.scene.launch('Clock', {x:rando4})
+
                 // this.add.image(0, 0, 'shelves').setOrigin(0);
             }
             // shelves
