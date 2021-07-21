@@ -7,15 +7,17 @@ class Play extends Phaser.Scene {
         // load images and tile sprites
   
         this.load.image('room', './assets/room1.png');
-        this.load.image('player', './assets/player1.png');
         this.load.image('desk', './assets/desk.png');
         this.load.image('clock', './assets/clock.png');
         this.load.image('painting', './assets/painting.png');
         this.load.image('blank', './assets/blank.png');
-        // this.load.image('paintingDark', './assets/....png')
         this.load.image('switch', './assets/switch.png');
         this.load.image('door', './assets/door.png');
 
+        this.load.spritesheet('player', './assets/playerSpriteSheet.png', {
+            frameWidth: 15,
+            frameHeight: 34,
+        });
   
         // load audio
         this.load.audio('step1', './assets/audio/fstep1.wav');
@@ -47,7 +49,7 @@ class Play extends Phaser.Scene {
         this.clock = this.physics.add.sprite(game.config.width - 20, backWall, 'clock');
         this.clock.body.setImmovable(true);     // for solid collisions
         this.clock.setOffset(0, -30);
-               // shift hitbox up
+        // shift hitbox up
         this.clock.body.onOverlap = true;
 
         this.switch = this.physics.add.sprite(game.config.width / 1.3, backWall - 3, 'switch');
@@ -65,6 +67,32 @@ class Play extends Phaser.Scene {
         this.desk.setSize(75, 15);      // change the desk hitbox size
         this.desk.setOffset(0, 20);     // shift the hitbox down
         this.desk.body.setImmovable(true);      // for solid collisions
+
+        // player animations (walking)
+        this.anims.create({
+            key: 'down',
+            frameRate: 8,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 2 }),
+        });
+        this.anims.create({
+            key: 'up',
+            frameRate: 8,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('player', { start: 3, end: 5 }),
+        });
+        this.anims.create({
+            key: 'left',
+            frameRate: 8,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('player', { start: 6, end: 8 }),
+        });
+        this.anims.create({
+            key: 'right',
+            frameRate: 8,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('player', { start: 9, end: 11 }),
+        });
 
 
         // camera
@@ -90,6 +118,7 @@ class Play extends Phaser.Scene {
         // variables
         this.movespeed = 140;
         this.lightsOn = true;
+        this.player.direction;
     }
 
     update() {
@@ -110,27 +139,38 @@ class Play extends Phaser.Scene {
         // console.log(this.player.body.speed);
         // console.log(this.player.body.blocked);
 
-        // movement stuff
+
+        // player movement and walking animation
         if (keyW.isDown && !this.player.body.blocked.up) {
             this.player.body.setVelocityY(-this.movespeed);
+            this.player.direction = "up";
         }
         else if (keyS.isDown && !this.player.body.blocked.down) {
             this.player.body.setVelocityY(this.movespeed);
+            this.player.direction = "down";
         }
         else {
             this.player.body.setVelocityY(0);
         }
         if (keyA.isDown && !this.player.body.blocked.left) {
             this.player.body.setVelocityX(-this.movespeed);
+            this.player.direction = "left";
         }
         else if (keyD.isDown && !this.player.body.blocked.right) {
             this.player.body.setVelocityX(this.movespeed);
+            this.player.direction = "right";
         }
         else {
             this.player.body.setVelocityX(0);
         }
 
-        // turns lights on/off
+        if (keyW.isDown || keyS.isDown || keyA.isDown || keyD.isDown) {
+            this.player.anims.play(`${this.player.direction}`, true);
+        }
+        if (!(keyW.isDown || keyS.isDown || keyA.isDown || keyD.isDown)) {
+            this.player.anims.pause()
+        }
+
         if (this.lightsOn) {
             let p = this.clock.tint;
             this.clock.tint = p;
