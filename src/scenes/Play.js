@@ -11,8 +11,12 @@ class Play extends Phaser.Scene {
         this.load.image('clock', './assets/clock.png');
         this.load.image('painting', './assets/painting.png');
         this.load.image('blank', './assets/blank.png');
+        this.load.image('blank2', './assets/blank2.png');
+        // this.load.image('paintingDark', './assets/....png')
+
         this.load.image('switch', './assets/switch.png');
         this.load.image('door', './assets/door.png');
+        this.load.image('shelves', './assets/bookshelves2.png');
 
         this.load.spritesheet('player', './assets/playerSpriteSheet.png', {
             frameWidth: 15,
@@ -55,6 +59,10 @@ class Play extends Phaser.Scene {
         this.switch = this.physics.add.sprite(game.config.width / 1.3, backWall - 3, 'switch');
         this.switch.body.onOverlap = true;
 
+        this.rug = this.physics.add.sprite(centerX+2, centerY+60, 'blank2');
+        this.rug.setSize(20, 60);
+        this.rug.body.onOverlap = true;
+
         this.player = this.physics.add.sprite(centerX, centerY, 'player');
         this.player.setCollideWorldBounds(true);
         this.player.body.onCollide = true;
@@ -62,6 +70,10 @@ class Play extends Phaser.Scene {
         this.deskint = this.physics.add.sprite(35, centerY-10, 'blank');
         this.deskint.setSize(70, 15);
         this.deskint.body.onOverlap = true;
+
+        this.shelf = this.physics.add.sprite(7, centerY+100, 'shelves');
+        this.shelf.setSize(24, 54);
+        this.shelf.body.onOverlap = true;
         
         this.desk = this.physics.add.sprite(40, centerY, 'desk');
         this.desk.setSize(75, 15);      // change the desk hitbox size
@@ -93,7 +105,6 @@ class Play extends Phaser.Scene {
             repeat: -1,
             frames: this.anims.generateFrameNumbers('player', { start: 9, end: 11 }),
         });
-
 
         // camera
         this.camera = this.cameras.main;
@@ -196,8 +207,10 @@ class Play extends Phaser.Scene {
         this.physics.collide(this.player, this.desk);
         this.physics.overlap(this.player, this.door);
         this.physics.overlap(this.player, this.painting);
+        this.physics.overlap(this.player, this.rug);
         this.physics.overlap(this.player, this.deskint);
         this.physics.overlap(this.player, this.switch);
+        this.physics.overlap(this.player, this.shelf);
 
         // check for interactions
         this.physics.world.on('overlap', (obj1, obj2, body1, body2)=>{
@@ -234,6 +247,18 @@ class Play extends Phaser.Scene {
             if (`${obj2.texture.key}` == 'door' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.scene.stop();
                 this.scene.launch('winScene');
+            }
+            if (`${obj2.texture.key}` == 'blank2' && Phaser.Input.Keyboard.JustDown(keyE)) {
+                // this.scene.pause();
+                // this.scene.launch('deskScene');
+                this.add.image(0, 0, 'shelves').setOrigin(0);
+                
+            }
+            if (`${obj2.texture.key}` == 'shelves' && Phaser.Input.Keyboard.JustDown(keyE)) {
+                this.scene.pause();
+                this.scene.launch('Clock', {x:0});
+                // this.add.image(0, 0, 'shelves').setOrigin(0);
+
             }
         });
     }
