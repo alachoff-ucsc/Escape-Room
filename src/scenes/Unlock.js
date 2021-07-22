@@ -25,16 +25,8 @@ class Unlock extends Phaser.Scene {
         key7 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SEVEN);
         key8 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.EIGHT);
         key9 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NINE);
-
-        
-
-        // BIG BRAIN LOGIC HERE WE GOOOO
         
         // variables
-        this.tried1 = false;
-        this.tried2 = false;
-        this.tried3 = false;
-        this.tried4 = false;
         this.digit1 = false;
         this.digit2 = false;
         this.digit3 = false;
@@ -100,7 +92,8 @@ class Unlock extends Phaser.Scene {
             }
             else {
                 this.digit2 = false;
-            }
+        }
+
             this.numDigits++;
             this.add.image(game.config.width/2 - 20, game.config.height/2 + 50, 'asterisk').setOrigin(0);
             this.lastDown = null;
