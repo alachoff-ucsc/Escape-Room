@@ -16,8 +16,12 @@ class Play extends Phaser.Scene {
         this.load.image('darkdoor', './assets/DoorDark.png');
         this.load.image('key', './assets/key.png');
         this.load.image('lens', './assets/lens.png');
+<<<<<<< HEAD
         this.load.image('vase', './assets/smallvase.png');
         this.load.image('vasebroke', './assets/smallvasebroke.png')
+=======
+        this.load.image('clockHitBox', './assets/blank3.png');
+>>>>>>> 8be58506694013c9d323bd8c633f28329d38ce98
         // this.load.image('paintingDark', './assets/....png')
 
         this.load.image('switch', './assets/switch.png');
@@ -44,12 +48,6 @@ class Play extends Phaser.Scene {
 
     create () {
         // place tile sprite and set world boundaries
-        // var rando1 = Phaser.Math.Between(0, 2);
-        // var rando2 = Phaser.Math.Between(2, 4);
-        // var rando3 = Phaser.Math.Between(4, 7);
-        // var rando4 = Phaser.Math.Between(7, 9);
-
-
         this.background = this.add.tileSprite(0, 0, 502, 376, 'room').setOrigin(0, 0);
         this.physics.world.setBounds(0, game.config.height / 4 - 5, game.config.width, game.config.height - game.config.height / 4 + 5);
         this.physics.world.setBoundsCollision();
@@ -71,7 +69,7 @@ class Play extends Phaser.Scene {
         // shift hitbox up
         this.clock.body.onOverlap = true;
 
-        this.clockdoor = this.physics.add.sprite(game.config.width - 20, backWall+20, 'blank3');
+        this.clockdoor = this.physics.add.sprite(game.config.width - 20, backWall+20, 'clockHitBox');
         this.clockdoor.setSize(32, 24);
         this.clockdoor.body.onOverlap = true;
 
@@ -154,12 +152,14 @@ class Play extends Phaser.Scene {
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         // variables
+        this.gameTimer = 300000;    // 5 minute timer
         this.movespeed = 140;
         this.lightsOn = true;
         this.obtainedTool = false;
         this.obtainedKey = false;
         this.clockReady = false;
         this.player.direction;
+        this.code = "";
     }
 
     update() {
@@ -177,9 +177,6 @@ class Play extends Phaser.Scene {
                 }, null, this);
             }
         }
-        // console.log(this.player.body.speed);
-        // console.log(this.player.body.blocked);
-
 
         // player movement and walking animation
         if (keyW.isDown && !this.player.body.blocked.up) {
@@ -262,10 +259,11 @@ class Play extends Phaser.Scene {
         this.physics.overlap(this.player, this.shelf);
         this.physics.overlap(this.player, this.clockdoor);
         this.physics.overlap(this.player, this.potter);
-        var rando1 = Phaser.Math.Between(0, 2);
-        var rando2 = Phaser.Math.Between(0, 2);
-        var rando3 = Phaser.Math.Between(0, 2);
-        var rando4 = Phaser.Math.Between(0, 2);
+        this.physics.overlap(this.player, this.potterb);
+        // var rando1 = Phaser.Math.Between(0, 2);
+        // var rando2 = Phaser.Math.Between(0, 2);
+        // var rando3 = Phaser.Math.Between(0, 2);
+        // var rando4 = Phaser.Math.Between(0, 2);
 
         // check for interactions
         this.physics.world.on('overlap', (obj1, obj2, body1, body2)=>{
@@ -344,37 +342,27 @@ class Play extends Phaser.Scene {
             }
 
             // clock
-            // if (`${obj2.texture.key}` == 'clock' && Phaser.Input.Keyboard.JustDown(keyE)) {
-            //     if (this.obtainedKey == true) {
-            //         this.scene.pause();
-            //         this.scene.launch('clockScene');
-            //     }
-            // }
-            if (`${obj2.texture.key}` == 'blank3' && Phaser.Input.Keyboard.JustDown(keyE)) {
+            if (`${obj2.texture.key}` == 'clockHitBox' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 if (this.obtainedKey == false) {
-                    if (this.lightsOn) {
+                    if (this.lightsOn) {        // locked, lights on
                         this.scene.pause();
-                        console.log(this)
-                        // this.scene.launch('Clock', {x:0});
-                        this.scene.launch('Clock', {x:3});
+                        this.scene.launch('clockScene', {x:1});
                     } 
-                    if (!this.lightsOn) {
-                        console.log(this)
+                    if (!this.lightsOn) {       // locked, lights off
                         this.scene.pause();
-                        this.scene.launch('Clock', {x:4});
+                        this.scene.launch('clockScene', {x:2});
                     }
-                } else {
-                    if (this.lightsOn) {
-                        this.scene.launch('Clock', {x:5});
+                } 
+                else {
+                    if (this.lightsOn) {        // unlocked, lights on
+                        this.scene.launch('clockScene', {x:3});
                     }
-                    if (!this.lightsOn) {
-                        this.scene.launch('Clock', {x:rando4});
-                    }
-                    
+                    if (!this.lightsOn) {       // unlocked, lights off
+                        this.scene.launch('clockScene', {x:4});
+                    }        
                 }
-
-                // this.add.image(0, 0, 'shelves').setOrigin(0);
             }
+
             // shelves
             if (`${obj2.texture.key}` == 'shelves' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 this.obtainedText = this.add.text(this.camera.centerX - 125, this.camera.centerY + 85, 'Obtained:').setOrigin(0.5);
@@ -391,9 +379,19 @@ class Play extends Phaser.Scene {
                 this.obtainedText.setScrollFactor(0, 0); 
                 this.obtainedimage = this.add.image(this.camera.centerX - 50, this.camera.centerY + 115, 'key').setOrigin(0.5);
                 this.obtainedimage.setScrollFactor(0, 0);       // setScrollFactor(0,0) makes the text follow the camera
+<<<<<<< HEAD
             } 
 
                 
+=======
+            }
+>>>>>>> 8be58506694013c9d323bd8c633f28329d38ce98
         });
+
+        // Game Over
+        this.clock = this.time.delayedCall(this.gameTimer, () => {
+            this.scene.stop();
+            this.scene.launch('loseScene');
+        }, null, this);
     }
 }
