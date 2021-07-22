@@ -16,12 +16,9 @@ class Play extends Phaser.Scene {
         this.load.image('darkdoor', './assets/DoorDark.png');
         this.load.image('key', './assets/key.png');
         this.load.image('lens', './assets/lens.png');
-<<<<<<< HEAD
         this.load.image('vase', './assets/smallvase.png');
         this.load.image('vasebroke', './assets/smallvasebroke.png')
-=======
         this.load.image('clockHitBox', './assets/blank3.png');
->>>>>>> 8be58506694013c9d323bd8c633f28329d38ce98
         // this.load.image('paintingDark', './assets/....png')
 
         this.load.image('switch', './assets/switch.png');
@@ -379,13 +376,9 @@ class Play extends Phaser.Scene {
                 this.obtainedText.setScrollFactor(0, 0); 
                 this.obtainedimage = this.add.image(this.camera.centerX - 50, this.camera.centerY + 115, 'key').setOrigin(0.5);
                 this.obtainedimage.setScrollFactor(0, 0);       // setScrollFactor(0,0) makes the text follow the camera
-<<<<<<< HEAD
             } 
 
                 
-=======
-            }
->>>>>>> 8be58506694013c9d323bd8c633f28329d38ce98
         });
 
         // Game Over
