@@ -1,6 +1,6 @@
 class DeskBroken extends Phaser.Scene {
     constructor() {
-        super("deskLightBrokenScene");
+        super("deskBrokenScene");
     }
 
     preload () {
@@ -8,7 +8,7 @@ class DeskBroken extends Phaser.Scene {
         this.load.image('potdesk', './assets/Deskpot.png');
         this.load.image('keydesk', './assets/Deskpotbroken.png');
         this.load.image('nokey', './assets/Newdeskpotxkey.png');
-        this.load.image('number5', './assets/Newdeskpot5.png')
+        this.load.image('number5', './assets/Newdeskpot7.png')
     }
 
     create (data) {
@@ -24,11 +24,6 @@ class DeskBroken extends Phaser.Scene {
         if (this.k==2) {
             this.add.image(0, 0 , 'number5').setOrigin(0);
         }
-        // if (this.k==3) {  
-        //     this.add.image(0, 0, 'clockdoor').setOrigin(0);
-        // this.add.image(0, 0, 'keydesk').setOrigin(0);
-        console.log(this) 
-    // }
     }
 
     update() {
