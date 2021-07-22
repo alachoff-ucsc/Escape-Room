@@ -22,13 +22,14 @@ class PaintingDark extends Phaser.Scene {
         this.spooky = this.sound.add('spooky');
         this.spookyEnd = this.sound.add('spookyEnd', { loop: true});
         this.spooky.play({ volume: 0.1});
-        // timer
+        
         this.timer = 0;
     }
 
     update() { 
         if (Phaser.Input.Keyboard.JustDown(keyC)) {
             this.sound.stopByKey('spookyEnd');
+            this.sound.stopByKey('spooky');
             this.scene.stop();
             this.scene.resume('playScene');
         }
@@ -49,7 +50,6 @@ class PaintingDark extends Phaser.Scene {
             this.paint5 = this.add.image(0, 0, 'paintingDark5').setOrigin(0);
         }
         if (this.timer == 1450) {
-
             this.paint8 = this.add.image(0, 0, 'fingers9').setOrigin(0);
             this.spooky.destroy();
             this.spookyEnd.play();

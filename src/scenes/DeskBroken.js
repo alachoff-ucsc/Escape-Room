@@ -3,7 +3,7 @@ class DeskBroken extends Phaser.Scene {
         super("deskBrokenScene");
     }
 
-    preload () {
+    preload() {
         this.load.image('paintingLight2', './assets/paintingLight.png');
         this.load.image('potdesk', './assets/Deskpot.png');
         this.load.image('keydesk', './assets/Deskpotbroken.png');
@@ -14,7 +14,7 @@ class DeskBroken extends Phaser.Scene {
         this.load.audio('shatter', './assets/audio/shatter.wav');
     }
 
-    create (data) {
+    create(data) {
         this.k = data.k;
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         if (this.k == 0){
@@ -36,5 +36,4 @@ class DeskBroken extends Phaser.Scene {
             this.scene.resume('playScene');
         }
     }
-    
 }

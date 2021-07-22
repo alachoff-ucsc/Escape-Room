@@ -3,7 +3,7 @@ class Clock extends Phaser.Scene {
         super("clockScene");
     }
       // add object to existing scene
-      preload () {
+      preload() {
         this.load.image('clockdoor', './assets/ClockDoor.png')
         this.load.image('clockdooropen', './assets/ClockDoorOpen.png')
         this.load.image('clockdoordark', './assets/ClockDoorDark.png');

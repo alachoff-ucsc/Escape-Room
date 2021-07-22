@@ -1,9 +1,9 @@
 // Credits
 // Jalen Pastor, Ryan Palmberg, Asher Lachoff
-//Game Title: The Face in the Dark
+// Game Title: The Face in the Dark
 // Date of Completion: 21 July, 2021
 
-// Creative tilt: We are the sole creators of our visual assets
+// Creative tilt: We are the sole creators of our visual and audible assets
 // The bleak colors and ehoes of the clock were made to instill discomfort in the player.
 // We are really happy with how this turned out. We think we polished this game and utilized its full potential.
 // Some unique attributes we implemented were interactivity with objects and a passcoed that requires player input.
@@ -36,7 +36,7 @@ let config = {
 let game = new Phaser.Game(config);
 
 // reserve keyboard vars
-let keySPACE, keyW, keyA, keyS, keyD, keyE, keyC;
+let keySPACE, keyW, keyA, keyS, keyD, keyE, keyC, keyM;
 let key0, key1, key2, key3, key4, key5, key6, key7, key8, key9;   // for code entry
 
 // global vars

@@ -30,9 +30,8 @@ class Win extends Phaser.Scene {
         this.add.text(game.config.width/2, 200, 'Audio -- Asher Lachoff', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, 250, 'Visual Assets -- Ryan Palmberg', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, 320, 'Press SPACE to return to main menu', menuConfig).setOrigin(0.5);
-
     }
-    
+
     update() {
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.scene.start('menuScene');

@@ -70,13 +70,14 @@ class Unlock extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(key9)) {
             this.lastDown = 9;
         }
-
+        
         
         // 1st check
         if (this.lastDown != null && this.numDigits == 0) {
             if (this.lastDown == 9) {
                 this.digit1 = true;
                 this.sound.play('click');
+
             }
             else {
                 this.digit1 = false;
@@ -93,7 +94,7 @@ class Unlock extends Phaser.Scene {
             }
             else {
                 this.digit2 = false;
-        }
+            }
 
             this.numDigits++;
             this.add.image(game.config.width/2 - 20, game.config.height/2 + 50, 'asterisk').setOrigin(0);
