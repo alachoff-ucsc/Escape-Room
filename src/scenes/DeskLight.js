@@ -13,15 +13,16 @@ class DeskLight extends Phaser.Scene {
     create (data) {
         this.l = data.l
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
+
         if (this.l==0) {
             this.add.image(0, 0, 'potdesk').setOrigin(0);
-            this.add.text(centerX, game.config.height - 20, 'The vase is glued to the table').setOrigin(0.5);
         }
         if (this.l==1) {
             this.add.image(0, 0, 'darkdesk').setOrigin(0);
-            this.add.text(centerX, game.config.height - 20, 'The vase is glued to the table').setOrigin(0.5);
         }
-        console.log(this)
+        this.add.text(centerX, game.config.height - 65, "Glued to the table. Something's inside.").setOrigin(0.5);
+        this.add.text(centerX, game.config.height - 50, "If only I had something to break it with...").setOrigin(0.5);
+        this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the vase').setOrigin(0.5);
     }
 
     update() {
