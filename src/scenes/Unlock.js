@@ -69,13 +69,12 @@ class Unlock extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(key9)) {
             this.lastDown = 9;
         }
-
+        
         
         // 1st check
         if (this.lastDown != null && this.numDigits == 0) {
             if (this.lastDown == 9) {
                 this.digit1 = true;
-                console.log('click!');
             }
             else {
                 this.digit1 = false;
@@ -88,11 +87,10 @@ class Unlock extends Phaser.Scene {
         if (this.lastDown != null && this.numDigits == 1) {
             if (this.lastDown == 5) {
                 this.digit2 = true;
-                console.log('click!');
             }
             else {
                 this.digit2 = false;
-        }
+            }
 
             this.numDigits++;
             this.add.image(game.config.width/2 - 20, game.config.height/2 + 50, 'asterisk').setOrigin(0);
@@ -102,7 +100,6 @@ class Unlock extends Phaser.Scene {
         if (this.lastDown != null && this.numDigits == 2) {
             if (this.lastDown == 8) {
                 this.digit3 = true;
-                console.log('click!');
             }
             else {
                 this.digit3 = false;
@@ -115,7 +112,6 @@ class Unlock extends Phaser.Scene {
         if (this.lastDown != null && this.numDigits == 3) {
             if (this.lastDown == 7) {
                 this.digit4 = true;
-                console.log('click!');
             }
             else {
                 this.digit4 = false;
