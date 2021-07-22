@@ -135,6 +135,7 @@ class Unlock extends Phaser.Scene {
 
         if (this.digit1 && this.digit2 && this.digit3 && this.digit4) {
             this.scene.stop();
+            this.scene.stop('playScene');
             this.scene.launch('winScene');
         }
         else if (this.numDigits == 4){
