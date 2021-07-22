@@ -33,6 +33,7 @@ class Menu extends Phaser.Scene {
   update() {
     // start game
     if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+      this.scene.stop();
       this.scene.start('playScene');
     }
   }
