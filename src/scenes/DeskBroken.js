@@ -8,7 +8,10 @@ class DeskBroken extends Phaser.Scene {
         this.load.image('potdesk', './assets/Deskpot.png');
         this.load.image('keydesk', './assets/Deskpotbroken.png');
         this.load.image('nokey', './assets/Newdeskpotxkey.png');
-        this.load.image('number5', './assets/Newdeskpot7.png')
+        this.load.image('number5', './assets/Newdeskpot7.png');
+
+        // audio
+        this.load.audio('shatter', './assets/audio/shatter.wav');
     }
 
     create (data) {
@@ -16,6 +19,7 @@ class DeskBroken extends Phaser.Scene {
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         if (this.k == 0){
             this.add.image(0, 0 , 'keydesk').setOrigin(0);
+            this.sound.play('shatter', { volume: 0.5});
             this.add.text(centerX, game.config.height - 20, 'The light of the lens cracked the exterior').setOrigin(0.5);
         }
         if (this.k==1) {

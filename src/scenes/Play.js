@@ -133,6 +133,7 @@ class Play extends Phaser.Scene {
         // step array for footstep audio
         this.steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
         this.stepping = false;
+        // add and play clock and room loops
         this.clockLoop = this.sound.add('clockLoop', { loop: true});
         this.clockLoop.play({ rate: 1.5, volume: 0.7})
         this.roomTone = this.sound.add('roomTone', { loop: true});
