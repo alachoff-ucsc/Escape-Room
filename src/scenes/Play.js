@@ -15,6 +15,8 @@ class Play extends Phaser.Scene {
         this.load.image('darkdoor', './assets/DoorDark.png');
         this.load.image('key', './assets/key.png');
         this.load.image('lens', './assets/lens.png');
+        this.load.image('vase', './assets/smallvase.png');
+        this.load.image('vasebroke', './assets/smallvasebroke.png')
         this.load.image('clockHitBox', './assets/blank3.png');
         this.load.image('switch', './assets/switch.png');
         this.load.image('door', './assets/door.png');
@@ -68,6 +70,7 @@ class Play extends Phaser.Scene {
         this.switch = this.physics.add.sprite(game.config.width / 1.3, backWall - 3, 'switch');
         this.switch.body.onOverlap = true;
 
+
         this.rug = this.physics.add.sprite(centerX+2, centerY+60, 'blank2');
         this.rug.setSize(20, 60);
         this.rug.body.onOverlap = true;
@@ -91,6 +94,13 @@ class Play extends Phaser.Scene {
         this.desk.setSize(75, 15);      // change the desk hitbox size
         this.desk.setOffset(0, 20);     // shift the hitbox down
         this.desk.body.setImmovable(true);      // for solid collisions
+
+        this.potter = this.physics.add.sprite(35, centerY-20, 'vase');
+        this.potter.body.setImmovable(true);
+
+        this.potterb = this.physics.add.sprite(35, centerY-20, 'vasebroke');
+        this.potterb.body.setImmovable(true);
+        // this.vasb = this.add.image(35, centerY, 'vasebroke')
 
         // player animations (walking)
         this.anims.create({
@@ -195,6 +205,14 @@ class Play extends Phaser.Scene {
         if (!(keyW.isDown || keyS.isDown || keyA.isDown || keyD.isDown)) {
             this.player.anims.pause()
         }
+        if (this.obtainedKey) {
+            this.potterb.alpha = 1;
+            this.potter.alpha = 0;
+        } 
+        else {
+            this.potterb.alpha = 0;
+            this.potter.alpha = 1;
+        }
         
         if (this.lightsOn) {
             let p = this.clock.tint;
@@ -204,6 +222,8 @@ class Play extends Phaser.Scene {
             this.door.alpha = 1;
             this.desk.tint = p;
             this.shelf.tint = p;
+            this.potter.tint = p;
+            this.potterb.tint = p;
         }
         else {
             this.clock.tint = 0;
@@ -212,6 +232,8 @@ class Play extends Phaser.Scene {
             this.door.alpha = 0;
             this.desk.tint = 0;
             this.shelf.tint = 0;
+            this.potter.tint = 0;
+            this.potterb.tint = 0;
             this.paper.tint = 0;
         }
 
@@ -228,6 +250,8 @@ class Play extends Phaser.Scene {
         this.physics.overlap(this.player, this.switch);
         this.physics.overlap(this.player, this.shelf);
         this.physics.overlap(this.player, this.clockdoor);
+        this.physics.overlap(this.player, this.potter);
+        this.physics.overlap(this.player, this.potterb);
         this.physics.overlap(this.player, this.paper);
 
         // check for interactions
@@ -343,14 +367,16 @@ class Play extends Phaser.Scene {
                 this.obtainedTool = true;
             }
 
-            // if you have the key, replace obtained: tool with obtained: key
+        
             if (this.obtainedKey && this.clockReady == false) {
                 this.clockReady = true;       // set true to avoid looping
                 this.obtainedText = this.add.text(this.camera.centerX - 125, this.camera.centerY + 115, 'Obtained:').setOrigin(0.5);
                 this.obtainedText.setScrollFactor(0, 0); 
                 this.obtainedimage = this.add.image(this.camera.centerX - 50, this.camera.centerY + 115, 'key').setOrigin(0.5);
                 this.obtainedimage.setScrollFactor(0, 0);       // setScrollFactor(0,0) makes the text follow the camera
-            }
+            } 
+
+                
         });
 
         // Game Over
