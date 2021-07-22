@@ -7,8 +7,6 @@ class Clock extends Phaser.Scene {
         this.load.image('clockdoor', './assets/ClockDoor.png')
         this.load.image('clockdooropen', './assets/ClockDoorOpen.png')
         this.load.image('clockdoordark', './assets/ClockDoorDark.png');
-        this.load.image('clockdoordark2', './assets/ClockDoorDark2.png');
-        this.load.image('clockdoordark3', './assets/ClockDoorDark3.png');
         this.load.image('clockdoordark8', './assets/ClockDoorDark8.png');
     }
     

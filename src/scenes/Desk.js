@@ -1,6 +1,6 @@
 class Desk extends Phaser.Scene {
     constructor() {
-        super("deskLightScene");
+        super("deskScene");
     }
 
     preload () {

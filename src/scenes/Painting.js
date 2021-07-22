@@ -4,7 +4,7 @@ class Painting extends Phaser.Scene {
     }
 
     preload () {
-        this.load.image('paintingLight', './assets/PaintingCloseUpLightNew.png');
+        this.load.image('paintingLight', './assets/paintingLight.png');
     }
 
     create () {

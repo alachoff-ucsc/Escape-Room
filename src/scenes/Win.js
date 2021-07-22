@@ -26,6 +26,7 @@ class Win extends Phaser.Scene {
     }
     update() {
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
+            this.scene.stop();
             this.scene.start('menuScene');
         }
     }
