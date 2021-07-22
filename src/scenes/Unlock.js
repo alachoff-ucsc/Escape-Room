@@ -32,30 +32,100 @@ class Unlock extends Phaser.Scene {
         this.digit3 = false;
         this.digit4 = false;
         this.numDigits = 0;
+        this.lastDown = null;
     }
     //Code: 9587
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(key9) && this.numDigits == 0) {
-            this.digit1 = true;
+
+        // checks which number key was pressed, saves it to lastDown
+        if (Phaser.Input.Keyboard.JustDown(key0)) {
+            this.lastDown = 0;
+        }
+        if (Phaser.Input.Keyboard.JustDown(key1)) {
+            this.lastDown = 1;
+        }
+        if (Phaser.Input.Keyboard.JustDown(key2)) {
+            this.lastDown = 2;
+        }
+        if (Phaser.Input.Keyboard.JustDown(key3)) {
+            this.lastDown = 3;
+        }
+        if (Phaser.Input.Keyboard.JustDown(key4)) {
+            this.lastDown = 4;
+        }
+        if (Phaser.Input.Keyboard.JustDown(key5)) {
+            this.lastDown = 5;
+        }
+        if (Phaser.Input.Keyboard.JustDown(key6)) {
+            this.lastDown = 6;
+        }
+        if (Phaser.Input.Keyboard.JustDown(key7)) {
+            this.lastDown = 7;
+        }
+        if (Phaser.Input.Keyboard.JustDown(key8)) {
+            this.lastDown = 8;
+        }
+        if (Phaser.Input.Keyboard.JustDown(key9)) {
+            this.lastDown = 9;
+        }
+
+        
+        // 1st check
+        if (this.lastDown != null && this.numDigits == 0) {
+            if (this.lastDown == 9) {
+                this.digit1 = true;
+                console.log('click!');
+            }
+            else {
+                this.digit1 = false;
+            }
             this.numDigits++;
             this.add.image(game.config.width/2 - 60, game.config.height/2 + 50, 'asterisk').setOrigin(0);
-        } 
-        if (Phaser.Input.Keyboard.JustDown(key5) && this.numDigits == 1) {
-            this.digit2 = true;
+            this.lastDown = null;
+        }
+        // 2nd check
+        if (this.lastDown != null && this.numDigits == 1) {
+            if (this.lastDown == 5) {
+                this.digit2 = true;
+                console.log('click!');
+            }
+            else {
+                this.digit2 = false;
+        }
+
             this.numDigits++;
             this.add.image(game.config.width/2 - 20, game.config.height/2 + 50, 'asterisk').setOrigin(0);
+            this.lastDown = null;
         }
-        if (Phaser.Input.Keyboard.JustDown(key8) && this.numDigits == 2) {
-            this.digit3 = true;
+        // 3rd check
+        if (this.lastDown != null && this.numDigits == 2) {
+            if (this.lastDown == 8) {
+                this.digit3 = true;
+                console.log('click!');
+            }
+            else {
+                this.digit3 = false;
+            }
             this.numDigits++;
             this.add.image(game.config.width/2 + 20, game.config.height/2 + 50, 'asterisk').setOrigin(0);
+            this.lastDown = null;
         }
-        if (Phaser.Input.Keyboard.JustDown(key7) && this.numDigits == 3) {
-            this.digit4 = true;
+        // 4th check
+        if (this.lastDown != null && this.numDigits == 3) {
+            if (this.lastDown == 7) {
+                this.digit4 = true;
+                console.log('click!');
+            }
+            else {
+                this.digit4 = false;
+            }
             this.numDigits++;
             this.add.image(game.config.width/2 + 60, game.config.height/2 + 50, 'asterisk').setOrigin(0);
+            this.lastDown = null;
         }
+
+
         if (this.digit1 && this.digit2 && this.digit3 && this.digit4) {
             this.scene.stop();
             this.scene.stop('playScene');
