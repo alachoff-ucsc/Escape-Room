@@ -2,11 +2,9 @@ class Win extends Phaser.Scene {
     constructor() {
         super("winScene");
     }
-
     preload() {
         this.load.image('black', './assets/black.png');
     }
-
     create() {
         let menuConfig = {
             fontFamily: 'Georgia',
@@ -36,7 +34,6 @@ class Win extends Phaser.Scene {
     }
     update() {
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-            this.scene.stop();
             this.scene.start('menuScene');
         }
     }
