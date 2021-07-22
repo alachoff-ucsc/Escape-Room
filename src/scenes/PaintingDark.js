@@ -9,8 +9,6 @@ class PaintingDark extends Phaser.Scene {
         this.load.image('paintingDark3', './assets/Scaryface3.png');
         this.load.image('paintingDark4', './assets/Scaryface4.png');
         this.load.image('paintingDark5', './assets/Scaryface5.png');
-        this.load.image('fingers3', './assets/Fingers3.png');
-        this.load.image('fingers4', './assets/Fingers4.png');
         this.load.image('fingers9', './assets/Fingers9.png');
     }
 
