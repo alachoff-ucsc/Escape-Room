@@ -10,14 +10,12 @@ class Play extends Phaser.Scene {
         this.load.image('clock', './assets/clock.png');
         this.load.image('painting', './assets/painting.png');
         this.load.image('deskHitBox', './assets/blank.png');
-        this.load.image('blank2', './assets/blank2.png');
-        this.load.image('blank3', './assets/blank3.png');
         this.load.image('darkdoor', './assets/DoorDark.png');
         this.load.image('key', './assets/key.png');
         this.load.image('lens', './assets/lens.png');
         this.load.image('vase', './assets/smallvase.png');
         this.load.image('vasebroke', './assets/smallvasebroke.png')
-        this.load.image('clockHitBox', './assets/blank3.png');
+        this.load.image('clockHitBox', './assets/blank2.png');
         this.load.image('switch', './assets/switch.png');
         this.load.image('door', './assets/door.png');
         this.load.image('shelves', './assets/bookshelves2.png');
@@ -69,11 +67,6 @@ class Play extends Phaser.Scene {
 
         this.switch = this.physics.add.sprite(game.config.width / 1.3, backWall - 3, 'switch');
         this.switch.body.onOverlap = true;
-
-
-        this.rug = this.physics.add.sprite(centerX+2, centerY+60, 'blank2');
-        this.rug.setSize(20, 60);
-        this.rug.body.onOverlap = true;
 
         this.paper = this.physics.add.sprite(game.config.width - 50, game.config.height - 50, 'paper');
         this.paper.body.onOverlap = true;
@@ -149,7 +142,8 @@ class Play extends Phaser.Scene {
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         // variables
-        this.gameTimer = 300000;    // 5 minute timer
+        this.gameTimer = 420000;    // 7 minute timer
+        this.chimeTimer = 0;
         this.movespeed = 140;
         this.lightsOn = true;
         this.obtainedTool = false;
@@ -224,6 +218,7 @@ class Play extends Phaser.Scene {
             this.shelf.tint = p;
             this.potter.tint = p;
             this.potterb.tint = p;
+            this.paper.tint = p;
         }
         else {
             this.clock.tint = 0;
@@ -279,33 +274,33 @@ class Play extends Phaser.Scene {
                     if (this.lightsOn){
                         if (!this.obtainedKey) {
                             this.scene.pause();
-                            this.scene.launch('deskLightBrokenScene', {k:0});  
+                            this.scene.launch('deskBrokenScene', {k:0});  
                         }
                         if (this.obtainedKey) {
                             this.scene.pause();
-                            this.scene.launch('deskLightBrokenScene', {k:1});
+                            this.scene.launch('deskBrokenScene', {k:1});
                         }
                         this.obtainedKey = true;
                     }
                     if (!this.lightsOn) {
                         if (!this.obtainedKey) {
                             this.scene.pause();
-                            this.scene.launch('deskLightScene', {l:1});
+                            this.scene.launch('deskScene', {l:1});
                         }
                         if (this.obtainedKey) {
                             this.scene.pause();
-                            this.scene.launch('deskLightBrokenScene', {k:2});
+                            this.scene.launch('deskBrokenScene', {k:2});
                         }
                     }
                 }
                 else {
                     if (this.lightsOn) {
                         this.scene.pause();
-                        this.scene.launch('deskLightScene', {l:0});
+                        this.scene.launch('deskScene', {l:0});
                     }
                     if (!this.lightsOn) {
                         this.scene.pause();
-                        this.scene.launch('deskLightScene', {l:1})
+                        this.scene.launch('deskScene', {l:1})
                     }
 
                 }
@@ -319,15 +314,8 @@ class Play extends Phaser.Scene {
 
             // door
             if (`${obj2.texture.key}` == 'door' && Phaser.Input.Keyboard.JustDown(keyE)) {
-                this.scene.stop();
-                this.scene.launch('winScene');
-            }
-
-            // carpet
-            if (`${obj2.texture.key}` == 'blank2' && Phaser.Input.Keyboard.JustDown(keyE)) {
-                // this.scene.pause();
-                // this.scene.launch('deskScene');
-                // this.add.image(0, 0, 'shelves').setOrigin(0);
+                this.scene.pause();
+                this.scene.launch('unlockScene');
             }
 
             // clock
@@ -374,9 +362,7 @@ class Play extends Phaser.Scene {
                 this.obtainedText.setScrollFactor(0, 0); 
                 this.obtainedimage = this.add.image(this.camera.centerX - 50, this.camera.centerY + 115, 'key').setOrigin(0.5);
                 this.obtainedimage.setScrollFactor(0, 0);       // setScrollFactor(0,0) makes the text follow the camera
-            } 
-
-                
+            }       
         });
 
         // Game Over
