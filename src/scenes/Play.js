@@ -314,8 +314,8 @@ class Play extends Phaser.Scene {
 
             // door
             if (`${obj2.texture.key}` == 'door' && Phaser.Input.Keyboard.JustDown(keyE)) {
-                this.scene.stop();
-                this.scene.launch('winScene');
+                this.scene.pause();
+                this.scene.launch('unlockScene');
             }
 
             // clock

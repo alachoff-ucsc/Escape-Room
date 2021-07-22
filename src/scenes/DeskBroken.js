@@ -8,7 +8,7 @@ class DeskBroken extends Phaser.Scene {
         this.load.image('potdesk', './assets/Deskpot.png');
         this.load.image('keydesk', './assets/Deskpotbroken.png');
         this.load.image('nokey', './assets/Newdeskpotxkey.png');
-        this.load.image('number5', './assets/Newdeskpot5.png')
+        this.load.image('number5', './assets/Newdeskpot7.png')
     }
 
     create (data) {

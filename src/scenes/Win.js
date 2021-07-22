@@ -3,6 +3,10 @@ class Win extends Phaser.Scene {
         super("winScene");
     }
 
+    preload() {
+        this.load.image('black', './assets/black.png');
+    }
+
     create() {
         let menuConfig = {
             fontFamily: 'Georgia',
@@ -20,7 +24,7 @@ class Win extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.sound.stopAll();
         this.sound.play('doorOpen');
-
+        this.add.image(0, 0, 'black').setOrigin(0,0);
         this.add.text(game.config.width/2, game.config.height/2, 'YOU ESCAPED', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/1.5, 'Press SPACE to return to main menu', menuConfig).setOrigin(0.5);
     }
