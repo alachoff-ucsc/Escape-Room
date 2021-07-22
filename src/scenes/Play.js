@@ -13,6 +13,9 @@ class Play extends Phaser.Scene {
         this.load.image('deskHitBox', './assets/blank.png');
         this.load.image('blank2', './assets/blank2.png');
         this.load.image('blank3', './assets/blank3.png');
+        this.load.image('darkdoor', './assets/DoorDark.png');
+        this.load.image('key', './assets/key.png');
+        this.load.image('lens', './assets/lens.png');
         // this.load.image('paintingDark', './assets/....png')
 
         this.load.image('switch', './assets/switch.png');
@@ -53,6 +56,9 @@ class Play extends Phaser.Scene {
         this.painting = this.physics.add.sprite(game.config.width / 3, backWall - 21, 'painting');
         this.painting.setOffset(0, 30)       // shift for proper observable distance
         this.painting.body.onOverlap = true;
+
+        this.darkexit = this.physics.add.sprite(game.config.width / 1.5, backWall, 'darkdoor');
+        this.darkexit.body.onOverlap = true;
 
         this.door = this.physics.add.sprite(game.config.width / 1.5, backWall, 'door');
         this.door.body.onOverlap = true;
@@ -195,23 +201,28 @@ class Play extends Phaser.Scene {
         if (!(keyW.isDown || keyS.isDown || keyA.isDown || keyD.isDown)) {
             this.player.anims.pause()
         }
-
+        
         if (this.lightsOn) {
             let p = this.clock.tint;
+            // let p2 = this.door.alpha;e
+            // console.log(p2);
             this.clock.tint = p;
             this.painting.tint = p;
             this.background.tint = p;
-            this.door.tint = p;
+            this.door.alpha = 1;
             this.desk.tint = p;
             this.shelf.tint = p;
+            // this.darkexit.alpha = 0;
         }
         else {
+            // let p3 = this.darkexit.alpha;
             this.clock.tint = 0;
             this.painting.tint = 0;
             this.background.tint = 0;
-            this.door.tint = 0;
+            this.door.alpha = 0;
             this.desk.tint = 0;
             this.shelf.tint = 0;
+            // this.darkexit.alpha = p3;
 
         }
 
@@ -253,15 +264,40 @@ class Play extends Phaser.Scene {
             }
             
             // desk
-            if (`${obj2.texture.key}` == 'deskHitBox' && this.lightsOn && Phaser.Input.Keyboard.JustDown(keyE)) {
+            if (`${obj2.texture.key}` == 'deskHitBox' && Phaser.Input.Keyboard.JustDown(keyE)) {
                 if (this.obtainedTool) {
-                    this.scene.pause();
-                    this.scene.launch('deskLightBrokenScene');
-                    this.obtainedKey = true;
+                    if (this.lightsOn){
+                        if (!this.obtainedKey) {
+                            this.scene.pause();
+                            this.scene.launch('deskLightBrokenScene', {k:0});  
+                        }
+                        if (this.obtainedKey) {
+                            this.scene.pause();
+                            this.scene.launch('deskLightBrokenScene', {k:1});
+                        }
+                        this.obtainedKey = true;
+                    }
+                    if (!this.lightsOn) {
+                        if (!this.obtainedKey) {
+                            this.scene.pause();
+                            this.scene.launch('deskLightScene', {l:1});
+                        }
+                        if (this.obtainedKey) {
+                            this.scene.pause();
+                            this.scene.launch('deskLightBrokenScene', {k:2});
+                        }
+                    }
                 }
                 else {
-                    this.scene.pause();
-                    this.scene.launch('deskLightScene');
+                    if (this.lightsOn) {
+                        this.scene.pause();
+                        this.scene.launch('deskLightScene', {l:0});
+                    }
+                    if (!this.lightsOn) {
+                        this.scene.pause();
+                        this.scene.launch('deskLightScene', {l:1})
+                    }
+
                 }
             }
 
@@ -318,7 +354,9 @@ class Play extends Phaser.Scene {
             }
             // shelves
             if (`${obj2.texture.key}` == 'shelves' && Phaser.Input.Keyboard.JustDown(keyE)) {
-                this.obtainedText = this.add.text(this.camera.centerX - 120, this.camera.centerY + 100, 'Obtained: Tool').setOrigin(0.5);
+                this.obtainedText = this.add.text(this.camera.centerX - 125, this.camera.centerY + 85, 'Obtained:').setOrigin(0.5);
+                this.obtainedimage = this.add.image(this.camera.centerX - 50, this.camera.centerY + 85, 'lens').setOrigin(0.5);
+                this.obtainedimage.setScrollFactor(0, 0);
                 this.obtainedText.setScrollFactor(0, 0);        // setScrollFactor(0,0) makes the text follow the camera
                 this.obtainedTool = true;
             }
@@ -326,8 +364,10 @@ class Play extends Phaser.Scene {
             // if you have the key, replace obtained: tool with obtained: key
             if (this.obtainedKey && this.clockReady == false) {
                 this.clockReady = true;       // set true to avoid looping
-                this.obtainedText = this.add.text(this.camera.centerX - 125, this.camera.centerY + 115, 'Obtained: Key').setOrigin(0.5);
-                this.obtainedText.setScrollFactor(0, 0);        // setScrollFactor(0,0) makes the text follow the camera
+                this.obtainedText = this.add.text(this.camera.centerX - 125, this.camera.centerY + 115, 'Obtained:').setOrigin(0.5);
+                this.obtainedText.setScrollFactor(0, 0); 
+                this.obtainedimage = this.add.image(this.camera.centerX - 50, this.camera.centerY + 115, 'key').setOrigin(0.5);
+                this.obtainedimage.setScrollFactor(0, 0);       // setScrollFactor(0,0) makes the text follow the camera
             }
                 
         });

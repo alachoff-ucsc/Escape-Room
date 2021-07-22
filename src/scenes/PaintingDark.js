@@ -43,7 +43,7 @@ class PaintingDark extends Phaser.Scene {
         }
         if (this.timer == 1300) {
             this.paint5 = this.add.image(0, 0, 'paintingDark5').setOrigin(0);
-            this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
+            // this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
         }
         if (this.timer == 1450) {
             console.log(this)

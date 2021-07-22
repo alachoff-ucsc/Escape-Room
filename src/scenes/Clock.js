@@ -35,7 +35,7 @@ class Clock extends Phaser.Scene {
             this.add.image(0, 0, 'clockdooropen').setOrigin(0);
         }
         
-        console.log(this)
+        // console.log(this)
     }
 
     update() {
