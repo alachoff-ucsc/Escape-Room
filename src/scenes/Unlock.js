@@ -7,6 +7,7 @@ class Unlock extends Phaser.Scene {
         this.load.image('asterisk', './assets/asterisk.png');   // 40x40
         this.load.image('black', './assets/black.png');
         this.load.audio('locked', './assets/audio/door_jostle.wav');
+        this.load.audio('click', './assets/audio/click.wav');
     }
 
     create() {
@@ -75,7 +76,7 @@ class Unlock extends Phaser.Scene {
         if (this.lastDown != null && this.numDigits == 0) {
             if (this.lastDown == 9) {
                 this.digit1 = true;
-                console.log('click!');
+                this.sound.play('click');
             }
             else {
                 this.digit1 = false;
@@ -88,7 +89,7 @@ class Unlock extends Phaser.Scene {
         if (this.lastDown != null && this.numDigits == 1) {
             if (this.lastDown == 5) {
                 this.digit2 = true;
-                console.log('click!');
+                this.sound.play('click');
             }
             else {
                 this.digit2 = false;
@@ -102,7 +103,7 @@ class Unlock extends Phaser.Scene {
         if (this.lastDown != null && this.numDigits == 2) {
             if (this.lastDown == 8) {
                 this.digit3 = true;
-                console.log('click!');
+                this.sound.play('click');
             }
             else {
                 this.digit3 = false;
@@ -115,7 +116,7 @@ class Unlock extends Phaser.Scene {
         if (this.lastDown != null && this.numDigits == 3) {
             if (this.lastDown == 7) {
                 this.digit4 = true;
-                console.log('click!');
+                this.sound.play('click');
             }
             else {
                 this.digit4 = false;
