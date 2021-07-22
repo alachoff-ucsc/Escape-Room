@@ -39,7 +39,6 @@ class Play extends Phaser.Scene {
 
     create () {
         // place tile sprite and set world boundaries
-
         this.background = this.add.tileSprite(0, 0, 502, 376, 'room').setOrigin(0, 0);
         this.physics.world.setBounds(0, game.config.height / 4 - 5, game.config.width, game.config.height - game.config.height / 4 + 5);
         this.physics.world.setBoundsCollision();
@@ -133,12 +132,14 @@ class Play extends Phaser.Scene {
         keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         // variables
+        this.gameTimer = 300000;    // 5 minute timer
         this.movespeed = 140;
         this.lightsOn = true;
         this.obtainedTool = false;
         this.obtainedKey = false;
         this.clockReady = false;
         this.player.direction;
+        this.code = "";
     }
 
     update() {
@@ -156,9 +157,6 @@ class Play extends Phaser.Scene {
                 }, null, this);
             }
         }
-        // console.log(this.player.body.speed);
-        // console.log(this.player.body.blocked);
-
 
         // player movement and walking animation
         if (keyW.isDown && !this.player.body.blocked.up) {
@@ -223,7 +221,6 @@ class Play extends Phaser.Scene {
         this.physics.overlap(this.player, this.switch);
         this.physics.overlap(this.player, this.shelf);
         this.physics.overlap(this.player, this.clockdoor);
-        var randomNumClock = Phaser.Math.Between(0, 2);
 
         // check for interactions
         this.physics.world.on('overlap', (obj1, obj2, body1, body2)=>{
@@ -311,7 +308,12 @@ class Play extends Phaser.Scene {
                 this.obtainedText = this.add.text(this.camera.centerX - 125, this.camera.centerY + 115, 'Obtained: Key').setOrigin(0.5);
                 this.obtainedText.setScrollFactor(0, 0);        // setScrollFactor(0,0) makes the text follow the camera
             }
-                
         });
+
+        // Game Over
+        this.clock = this.time.delayedCall(this.gameTimer, () => {
+            this.scene.stop();
+            this.scene.launch('loseScene');
+        }, null, this);
     }
 }
