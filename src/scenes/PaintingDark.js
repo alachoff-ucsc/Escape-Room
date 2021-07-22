@@ -43,22 +43,11 @@ class PaintingDark extends Phaser.Scene {
         }
         if (this.timer == 1300) {
             this.paint5 = this.add.image(0, 0, 'paintingDark5').setOrigin(0);
-            // this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
         }
         if (this.timer == 1450) {
-            console.log(this)
-            if (this.j==0) {
-                this.paint6 = this.add.image(0, 0, 'fingers3').setOrigin(0);
-                this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
-            }
-            if (this.j==1) {
-                this.paint7 = this.add.image(0, 0, 'fingers4').setOrigin(0);
-                this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
-            }
-            if (this.j==2) {
-                this.paint8 = this.add.image(0, 0, 'fingers9').setOrigin(0);
-                this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
-            }
+
+            this.paint8 = this.add.image(0, 0, 'fingers9').setOrigin(0);
+            this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
         }
         this.timer++;
     }
