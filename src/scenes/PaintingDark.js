@@ -10,6 +10,8 @@ class PaintingDark extends Phaser.Scene {
         this.load.image('paintingDark4', './assets/Scaryface4.png');
         this.load.image('paintingDark5', './assets/Scaryface5.png');
         this.load.image('fingers9', './assets/Fingers9.png');
+        this.load.audio('spooky', './assets/audio/spookums.wav');
+        this.load.audio('spookyEnd', './assets/audio/spookumsEnd.wav');
     }
 
     create (data) {
@@ -17,12 +19,16 @@ class PaintingDark extends Phaser.Scene {
         keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
         
+        this.spooky = this.sound.add('spooky');
+        this.spookyEnd = this.sound.add('spookyEnd', { loop: true});
+        this.spooky.play({ volume: 0.1});
         // timer
         this.timer = 0;
     }
 
     update() { 
         if (Phaser.Input.Keyboard.JustDown(keyC)) {
+            this.sound.stopByKey('spookyEnd');
             this.scene.stop();
             this.scene.resume('playScene');
         }
@@ -45,6 +51,8 @@ class PaintingDark extends Phaser.Scene {
         if (this.timer == 1450) {
 
             this.paint8 = this.add.image(0, 0, 'fingers9').setOrigin(0);
+            this.spooky.destroy();
+            this.spookyEnd.play();
             this.add.text(centerX, game.config.height - 20, 'Press C to stop looking at the picture?').setOrigin(0.5);
         }
         this.timer++;

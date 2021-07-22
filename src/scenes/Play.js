@@ -37,6 +37,7 @@ class Play extends Phaser.Scene {
         this.load.audio('switchOn', './assets/audio/switch_on.wav');
         this.load.audio('switchOff', './assets/audio/switch_off.wav');
         this.load.audio('clockLoop', './assets/audio/clock_loop.wav');
+        this.load.audio('roomTone', './assets/audio/roomtone.wav');
     }
 
     create () {
@@ -128,11 +129,14 @@ class Play extends Phaser.Scene {
         this.camera.setDeadzone(60, 40);
         this.camera.startFollow(this.player);
 
-        // add audio array for randomized steps
+        // add audio stuff
+        // step array for footstep audio
         this.steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
         this.stepping = false;
         this.clockLoop = this.sound.add('clockLoop', { loop: true});
         this.clockLoop.play({ rate: 1.5, volume: 0.7})
+        this.roomTone = this.sound.add('roomTone', { loop: true});
+        this.roomTone.play({ volume: 0.1})
         
         // define keys
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
