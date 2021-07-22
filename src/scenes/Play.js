@@ -198,26 +198,21 @@ class Play extends Phaser.Scene {
         
         if (this.lightsOn) {
             let p = this.clock.tint;
-            // let p2 = this.door.alpha;e
-            // console.log(p2);
             this.clock.tint = p;
             this.painting.tint = p;
             this.background.tint = p;
             this.door.alpha = 1;
             this.desk.tint = p;
             this.shelf.tint = p;
-            // this.darkexit.alpha = 0;
         }
         else {
-            // let p3 = this.darkexit.alpha;
             this.clock.tint = 0;
             this.painting.tint = 0;
             this.background.tint = 0;
             this.door.alpha = 0;
             this.desk.tint = 0;
             this.shelf.tint = 0;
-            // this.darkexit.alpha = p3;
-
+            this.paper.tint = 0;
         }
 
         // create physics world events

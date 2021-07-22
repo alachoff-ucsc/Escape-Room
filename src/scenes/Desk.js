@@ -31,5 +31,4 @@ class Desk extends Phaser.Scene {
             this.scene.resume('playScene');
         }
     }
-    
 }

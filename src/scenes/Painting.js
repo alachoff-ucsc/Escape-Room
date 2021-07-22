@@ -19,5 +19,4 @@ class Painting extends Phaser.Scene {
             this.scene.resume('playScene');
         }
     }
-    
 }
