@@ -1,3 +1,23 @@
+// Credits
+// Jalen Pastor, Ryan Palmberg, Asher Lachoff
+//Game Title: The Face in the Dark
+// Date of Completion: 21 July, 2021
+
+// Creative tilt: We are the sole creators of our visual assets
+// The bleak colors and ehoes of the clock were made to instill discomfort in the player.
+// We are really happy with how this turned out. We think we polished this game and utilized its full potential.
+// Some unique attributes we implemented were interactivity with objects and a passcoed that requires player input.
+// The difficulty is dictated by the timer and the puzzles we implemented.
+// Our core mechanic of flickering the lights to uncover secrets pertains to the theme of 'lost and found.'
+// Every visual asset was made by Ryan in Clip Studio Paint.
+// Ticking sound by: Dave Incamas https://freesound.org/people/daveincamas/sounds/27077/
+// Clock chime from: https://mixkit.co/free-sound-effects/bell/
+// The editing of these tracks and the remaining sound effects were created by Asher.
+// Jalen took on the bulk of the programming, though everyone contributed greatly on this front.
+// Jalen was responsible for the foundation of the programming, the timer, win and lose conditions, the interactivity of objects, and polish.
+// Ryan was responsible for layered scene transitions and the light switch mechanic.
+// Asher was responsible for the timing and implementation of sound effects.
+
 let config = {
     type: Phaser.AUTO,
     width: 502,

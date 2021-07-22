@@ -20,7 +20,7 @@ class Play extends Phaser.Scene {
         this.load.image('door', './assets/door.png');
         this.load.image('shelves', './assets/bookshelves2.png');
         this.load.image('paper', './assets/paper.png');
-
+        this.load.image('floorface', './assets/FloorFace.png')
         this.load.spritesheet('player', './assets/playerSpriteSheet.png', {
             frameWidth: 15,
             frameHeight: 34,
