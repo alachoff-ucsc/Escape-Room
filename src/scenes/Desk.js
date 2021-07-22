@@ -1,4 +1,4 @@
-class DeskLight extends Phaser.Scene {
+class Desk extends Phaser.Scene {
     constructor() {
         super("deskLightScene");
     }

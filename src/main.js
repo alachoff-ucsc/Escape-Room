@@ -8,7 +8,7 @@ let config = {
         debug: true
       }
     },
-    scene: [Menu, Play, Painting, PaintingDark, Win, Lose, DeskLight, DeskLightBroken, Clock]
+    scene: [Menu, Play, Painting, PaintingDark, Win, Lose, Desk, DeskBroken, Clock]
 
   }
   
