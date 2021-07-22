@@ -18,7 +18,7 @@ class Menu extends Phaser.Scene {
     }
 
     // show menu text
-    this.add.text(game.config.width/2, game.config.height/5, 'ESCAPE ROOM', menuConfig).setOrigin(0.5);
+    this.add.text(game.config.width/2, game.config.height/5, 'The Face in the Dark', menuConfig).setOrigin(0.5);
     this.add.text(game.config.width/2, game.config.height/3.5, 'Use WASD to move', menuConfig).setOrigin(0.5);
     this.add.text(game.config.width/2, game.config.height/2.5, 'Objective: Use your wits to escape!', menuConfig).setOrigin(0.5);
     this.add.text(game.config.width/2, game.config.height/2, 'Use E to interact with objects', menuConfig).setOrigin(0.5);
