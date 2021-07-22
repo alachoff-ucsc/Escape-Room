@@ -11,7 +11,8 @@
 // Our core mechanic of flickering the lights to uncover secrets pertains to the theme of 'lost and found.'
 // Every visual asset was made by Ryan in Clip Studio Paint.
 // Ticking sound by: Dave Incamas https://freesound.org/people/daveincamas/sounds/27077/
-// Clock chime from: https://mixkit.co/free-sound-effects/bell/
+// Clock chime by: radwoc https://freesound.org/people/radwoc/sounds/256821/
+// Vase shattering by: CosmicEmbers https://freesound.org/people/CosmicEmbers/sounds/160759/
 // The editing of these tracks and the remaining sound effects were created by Asher.
 // Jalen took on the bulk of the programming, though everyone contributed greatly on this front.
 // Jalen was responsible for the foundation of the programming, the timer, win and lose conditions, the interactivity of objects, and polish.
